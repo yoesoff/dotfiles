@@ -24,6 +24,13 @@
 " Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
 " "Appendix B".
 
+" Pathogen
+" --------
+" These lines have to be called before enabling filetype detection.
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+
 "---------------------------------------------------------------------
 " Generelle Einstellungen
 "---------------------------------------------------------------------

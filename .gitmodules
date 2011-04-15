@@ -34,3 +34,6 @@
 [submodule "vim/bundle/scrollcolors"]
 	path = vim/bundle/scrollcolors
 	url = https://github.com/vim-scripts/ScrollColors.git
+[submodule "vim/bundle/justify"]
+	path = vim/bundle/justify
+	url = https://github.com/vim-scripts/Justify.git

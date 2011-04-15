@@ -37,3 +37,6 @@
 [submodule "vim/bundle/justify"]
 	path = vim/bundle/justify
 	url = https://github.com/vim-scripts/Justify.git
+[submodule "vim/bundle/taglist"]
+	path = vim/bundle/taglist
+	url = https://github.com/vim-scripts/taglist.vim.git

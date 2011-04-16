@@ -198,6 +198,25 @@ com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
 com! SOrc source $MYVIMRC | source $MYGVIMRC | let &ft=&ft
 
+" A function, that preserves the cursor position while executing a command.
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+" Strip trailing white spaces
+nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+
+" Align whole file
+nmap _= :call Preserve("normal gg=G")<CR>
+
 " Soft linewrapping
 "   to insert unicode characters use ctrl-vu charcode
 command! -nargs=* Wrap set wrap linebreak nolist showbreak=…

@@ -147,7 +147,7 @@ colorscheme zenburn
 " Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
 " geklaut aus der VIM-Wiki:
 " http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
-set statusline=%<%f%h%m%r\ [%{&ff}]%{\"
+set statusline=%<%f%h%m%r%{fugitive#statusline()}\ [%{&ff}]%{\"
     \[\".(&fenc==\"\"?&enc:&fenc).
     \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
     \\"]\"}%=\ [\%03.3b,0x\%02.2B]\ [%v,%l][%p%%][%L]

@@ -93,8 +93,15 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
+  " filetype settings
   autocmd FileType text setlocal textwidth=78
+  autocmd FileType gitconfig setlocal sw=8 noexpandtab
+  autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
+	\ setlocal sts=2 sw=2
+  autocmd FileType c setlocal sw=4 noexpandtab
+  autocmd FileType python setlocal sw=4 sts=4 expandtab
+  autocmd FileType javascript setlocal sts=4 sw=4 noexpandtab
+  autocmd BufNewFile,BufRead *.rss setfiletype xml
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler

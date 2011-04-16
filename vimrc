@@ -104,6 +104,12 @@ if has("autocmd")
     \   exe "normal! g`\"" |
     \ endif
 
+  " Lädt automatisch abhängig von der Dateiendung ein Template, sofern
+  " vorhanden Aus "Hacking Vim" von Kim Schulz
+  if has("autocmd")
+    autocmd BufNewFile * silent! 0r $HOME/.vim/templates/%:e.tpl
+  endif
+
   augroup END
 
 else
@@ -147,14 +153,6 @@ source $HOME/.vim/abbreviations.vim
 " :edit {file} den aktuellen Puffer braucht.
 set hidden
 
-" Ermöglicht es gf einzusetzen ohne vorher Änderungen speichern zu müssen.
-" VORSICHT: Vor einem :q! dreimal nachdenken!
-map gf :edit <cfile><CR>
-
-" Lädt automatisch abhängig von der Dateiendung ein Template, sofern vorhanden
-" Aus "Hacking Vim" von Kim Schulz
-autocmd BufNewFile * silent! 0r $HOME/.vim/templates/%:e.tpl
-
 " Cooleres Tab-Menü
 set wildmenu
 
@@ -179,6 +177,10 @@ com! LCD lcd %:p:h
 " Don't use Ex mode, use Q for formatting
 " Aus vimrc_example von Bram Moolenar
 map Q gq
+
+" Ermöglicht es gf einzusetzen ohne vorher Änderungen speichern zu müssen.
+" VORSICHT: Vor einem :q! dreimal nachdenken!
+map gf :edit <cfile><CR>
 
 " Intuitives Springen durch Zeilen, die umgebrochen wurden.
 " Aus "Hacking Vim" von Kim Schulz
@@ -230,11 +232,11 @@ map ,a :A<CR>
 " Tabular
 " -------
 " short-keys [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
-  nmap <Leader>t= :Tabularize /=<CR>
-  vmap <Leader>t= :Tabularize /=<CR>
-  " [:help \zs, :help \ze]
-  nmap <Leader>t: :Tabularize /:\zs<CR>
-  vmap <Leader>t: :Tabularize /:\zs<CR>
+nmap <Leader>t= :Tabularize /=<CR>
+vmap <Leader>t= :Tabularize /=<CR>
+" [:help \zs, :help \ze]
+nmap <Leader>t: :Tabularize /:\zs<CR>
+vmap <Leader>t: :Tabularize /:\zs<CR>
 
 " Automatical alignment
 "   [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
@@ -260,15 +262,6 @@ let g:Tex_DefaultTargetFormat='pdf'
 "let g:tex_flavor='latex'
 set grepprg=grep\ -nH\ $*\ /dev/null
 "set iskeyword+=:
-
-" GCC Sense
-" ---------
-let g:gccsenseUseOmniFunc = 1
-
-" eclim
-"------
-" disable automatic validation - too slow
-let g:EclimCValidate = 0
 
 "---------------------------------------------------------------------
 " Spielplatz

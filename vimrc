@@ -214,9 +214,20 @@ nmap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 " Align whole file
 nmap _= :call Preserve("normal gg=G")<CR>
 
+" Nice characters in listing mode
+"   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
+"                   ⍽ 9085(x237D), ␣ 9251(x2423)
+if has("multi_byte")
+  set listchars=tab:▸╴,eol:¬,nbsp:⍽,trail:␣
+endif
+
 " Soft linewrapping
 "   to insert unicode characters use ctrl-vu charcode
-command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
+if has("multi_byte")
+  command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
+else
+  command! -nargs=* Wrap set wrap linebreak nolist showbreak=~
+endif
 command! -nargs=* Nowrap set nowrap
 map  <A-j> gj
 map  <A-k> gk

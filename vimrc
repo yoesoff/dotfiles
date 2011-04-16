@@ -159,7 +159,7 @@ set wildmenu
 " Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
 " Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
 " durch ftplugins beeinflusst sein.
-setlocal sw=4
+setlocal sw=2
 " softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
 setlocal softtabstop=4
 

@@ -151,9 +151,6 @@ set statusline=%<%f%h%m%r\ [%{&ff}]%{\"
     \[\".(&fenc==\"\"?&enc:&fenc).
     \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
     \\"]\"}%=\ [\%03.3b,0x\%02.2B]\ [%v,%l][%p%%][%L]
-" Backup of a working status-line ;)
-" set statusline=%<%f%h%m%r\ [%{&ff}]%=[\%03.3b,0x\%02.2B]\ [%v,%l]\ [%p%%]
-" 			\\ [%L]
 set laststatus=2
 
 " Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
@@ -306,7 +303,7 @@ nnoremap <F3> :GundoToggle<CR>
 
 " Alternate
 " ---------
-map ,a :A<CR>
+map <leader>a :A<CR>
 
 " Tabular
 " -------

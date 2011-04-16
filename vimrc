@@ -183,6 +183,23 @@ com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
 com! SOrc source $MYVIMRC | source $MYGVIMRC | let &ft=&ft
 
+" Soft linewrapping
+"   to insert unicode characters use ctrl-vu charcode
+command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
+command! -nargs=* Nowrap set nowrap
+map  <A-j> gj
+map  <A-k> gk
+map  <A-4> g$
+map  <A-6> g^
+map  <A-^> g^
+map  <A-0> g^
+imap <A-j> <C-o>gj
+imap <A-k> <C-o>gk
+imap <A-4> <C-o>g$
+imap <A-6> <C-o>g^
+imap <A-^> <C-o>g^
+imap <A-0> <C-o>g^
+
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros
 "---------------------------------------------------------------------

@@ -13,3 +13,9 @@ Switch to the ~/.dotfiles directory, and fetch submodules:
     cd ~/.dotfiles
     git submodule init
     git submodule update
+
+
+Useful aliases
+
+    git config alias.addvimbundlelocal \!"sh -c 'git add vim/bundle/\"\$1\" && git commit -m \"Installed $1 bundle\"' -"
+    git config alias.addvimbundle \!"sh -c 'git submodule add \"\$1\" vim/bundle/\"\$2\" && git config -f .gitmodules submodule.vim/bundle/\"\$2\".ignore dirty && git commit -m \"Installed \$2 bundle as a submodule\"' -"

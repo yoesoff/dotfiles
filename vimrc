@@ -94,14 +94,22 @@ if has("autocmd")
   au!
 
   " filetype settings
-  autocmd FileType text setlocal textwidth=78
+  autocmd FileType text setlocal autoindent
   autocmd FileType gitconfig setlocal sw=8 noexpandtab
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
-  autocmd FileType c setlocal sw=4 noexpandtab
+  autocmd FileType c,cpp setlocal sw=4 noexpandtab
   autocmd FileType python setlocal sw=4 sts=4 expandtab
   autocmd FileType javascript setlocal sts=4 sw=4 noexpandtab
   autocmd BufNewFile,BufRead *.rss setfiletype xml
+  " formatoptions
+  autocmd FileType c,cpp,sh,python setlocal formatoptions=croqn
+  autocmd FileType tex setlocal formatoptions=tcroqlwn
+  autocmd FileType text setlocal formatoptions=tcroqn
+  autocmd FileType text,c,cpp,tex,sh,python setlocal textwidth=78
+  " to use an external format program use
+  "   :set formatprg=par
+  "   :set formatprg=par\ -w78
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -166,7 +174,7 @@ set wildmenu
 " Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
 " Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
 " durch ftplugins beeinflusst sein.
-setlocal sw=4
+setlocal sw=2
 " softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
 setlocal softtabstop=4
 
@@ -214,6 +222,13 @@ imap <A-0> <C-o>g^
 " Don't use Ex mode, use Q for formatting
 " Aus vimrc_example von Bram Moolenar
 map Q gq
+
+" Toggle automatic formatting
+map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
+      \ set formatoptions-=a <Bar>
+      \ else <Bar>
+      \ set formatoptions+=a <Bar>
+      \ endif<CR>
 
 " Ermöglicht es gf einzusetzen ohne vorher Änderungen speichern zu müssen.
 " VORSICHT: Vor einem :q! dreimal nachdenken!

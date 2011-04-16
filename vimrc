@@ -193,7 +193,8 @@ if has("autocmd")
 endif
 com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
-com! SOrc source $MYVIMRC | source $MYGVIMRC | let &ft=&ft
+com! Sorc source $MYVIMRC | 
+      \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
 
 " A function, that preserves the cursor position while executing a command.
 function! Preserve(command)

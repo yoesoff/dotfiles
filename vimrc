@@ -170,6 +170,19 @@ set smarttab
 com! CD cd %:p:h
 com! LCD lcd %:p:h
 
+" Quick editing and automatic sourcing of vimrc file.
+if has("autocmd")
+  " :autocmd! config to disable automatic sourcing
+  augroup config
+    au!
+    autocmd bufwritepost .vimrc source $MYVIMRC
+    autocmd bufwritepost .gvimrc source $MYGVIMRC
+  augroup END
+endif
+com! Evimrc tabedit $MYVIMRC
+com! Egvimrs tabedit $MYGVIMRC
+com! SOrc source $MYVIMRC | source $MYGVIMRC
+
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros
 "---------------------------------------------------------------------

@@ -150,7 +150,7 @@ colorscheme zenburn
 set statusline=%<%f%h%m%r%{fugitive#statusline()}\ [%{&ff}]%{\"
     \[\".(&fenc==\"\"?&enc:&fenc).
     \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
-    \\"]\"}%=\ [\%03.3b,0x\%02.2B]\ [%v,%l][%p%%][%L]
+    \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
 set laststatus=2
 
 " Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst

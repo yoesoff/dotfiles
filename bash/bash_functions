@@ -1,0 +1,33 @@
+#!/bin/bash
+
+BASH_DIR=~/.dotfiles/bash
+
+# Wikipedia lookup
+wiki()
+{
+  dig +short txt "$*".wp.dg.cx | perl -pe's/\\(\d{1,3})/chr $1/eg' | fmt
+}
+
+# Silly coffee pot
+coffee()
+{
+  while true; do
+    clear
+    echo -e "   )\n  (\nC[_]"
+    sleep .1
+    clear
+    echo -e "  | \n  |\nC[_]"
+    sleep .1
+    clear
+    echo -e " (  \n  )\nC[_]"
+    sleep .1
+    clear
+    echo -e \"  |\n  |\nC[_]\"
+    sleep .1
+  done
+}
+
+# Thesaurus
+if [[ -f "${BASH_DIR}/func_thesaurus" ]]; then
+  source "${BASH_DIR}/func_thesaurus" 
+fi

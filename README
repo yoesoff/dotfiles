@@ -8,6 +8,10 @@ Create symlinks:
     ln -s ~/.dotfiles/vimrc ~/.vimrc
     ln -s ~/.dotfiles/gvimrc ~/.gvimrc
 
+    ln -s ~/.dotfiles/bash/bashrc ~/.bashrc
+    ln -s ~/.dotfiles/bash/bash_profile ~/.bash_profile
+    ln -s ~/.dotfiles/bash/bash_logout ~/.bash_logout
+
 Switch to the ~/.dotfiles directory, and fetch submodules:
 
     cd ~/.dotfiles

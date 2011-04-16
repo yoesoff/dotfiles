@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# ls aliases
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+
+# copy with rsync
+alias rscp='rsync -aP --no-whole-file --inplace'
+alias rsmv='rscp --remove-source-files'
+
+# other programs 
+alias lmk="latexmk -silent -pdf"
+alias matlab="matlab -nosplash"
+alias fluidsynth-font="fluidsynth /usr/share/sounds/sf2/CT4MGM.SF2"
+
+# compile optimized
+alias gcc02="gcc -O2 -DNDEBUG"
+alias gcc03="gcc -O3 -DNDEBUG"
+alias g++o2="g++ -O2 -DNDEBUG"
+alias g++o3="g++ -O3 -DNDEBUG"
+
+# SyncEvolution
+alias syncev="syncevolution funambol"

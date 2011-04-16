@@ -22,7 +22,7 @@ coffee()
     echo -e " (  \n  )\nC[_]"
     sleep .1
     clear
-    echo -e \"  |\n  |\nC[_]\"
+    echo -e "  |\n  |\nC[_]"
     sleep .1
   done
 }

@@ -159,7 +159,7 @@ set wildmenu
 " Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
 " Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
 " durch ftplugins beeinflusst sein.
-setlocal sw=2
+setlocal sw=4
 " softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
 setlocal softtabstop=4
 
@@ -175,13 +175,13 @@ if has("autocmd")
   " :autocmd! config to disable automatic sourcing
   augroup config
     au!
-    autocmd bufwritepost .vimrc source $MYVIMRC
-    autocmd bufwritepost .gvimrc source $MYGVIMRC
+    autocmd bufwritepost .vimrc source $MYVIMRC | let &ft=&ft
+    autocmd bufwritepost .gvimrc source $MYGVIMRC | let &ft=&ft
   augroup END
 endif
 com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
-com! SOrc source $MYVIMRC | source $MYGVIMRC
+com! SOrc source $MYVIMRC | source $MYGVIMRC | let &ft=&ft
 
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros

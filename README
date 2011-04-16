@@ -5,8 +5,8 @@ Installation:
 Create symlinks:
 
     ln -s ~/.dotfiles/vim ~/.vim
-    ln -s ~/.dotfiles/vimrc ~/.vimrc
-    ln -s ~/.dotfiles/gvimrc ~/.gvimrc
+    ln -s ~/.dotfiles/vim/vimrc ~/.vimrc
+    ln -s ~/.dotfiles/vim/gvimrc ~/.gvimrc
 
     ln -s ~/.dotfiles/bash/bashrc ~/.bashrc
     ln -s ~/.dotfiles/bash/bash_profile ~/.bash_profile

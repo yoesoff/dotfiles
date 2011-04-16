@@ -24,7 +24,15 @@ function! Tex_SetTeXCompilerTarget(type, target)
 
 	if targetRule != ''
 		if a:type == 'Compile'
-			let &l:makeprg = escape(targetRule, Tex_GetVarValue('Tex_EscapeChars'))
+			" check if we have a Makefile, and if we want to use it set
+            " makeprg accordingly
+			if Tex_GetVarValue('Tex_UseMakefile') &&
+						\(glob('makefile') != '' || glob('Makefile') != '')
+				let &l:makeprg = 'make $*'
+			else
+				let &l:makeprg = escape(targetRule,
+				Tex_GetVarValue('Tex_EscapeChars'))
+            endif
 		elseif a:type == 'View'
 			let s:viewer = targetRule
 		endif

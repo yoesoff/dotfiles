@@ -346,10 +346,12 @@ endfunction
 " Latex-Suite
 " -----------
 let g:Tex_DefaultTargetFormat='pdf'
-"let g:Tex_CompileRule_pdf='latexmk -pdf -f -r ~/.latexmkrc_nonstop $*'
-"let g:tex_flavor='latex'
+if executable('evince')
+  let g:Tex_ViewRule_pdf='evince'
+endif
+let g:Tex_UseMakefile=1
+
 set grepprg=grep\ -nH\ $*\ /dev/null
-"set iskeyword+=:
 
 "---------------------------------------------------------------------
 " Spielplatz

@@ -234,6 +234,14 @@ map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
 " VORSICHT: Vor einem :q! dreimal nachdenken!
 map gf :edit <cfile><CR>
 
+" mappings to easily edit files, that are within the same directory as the
+" current file.
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+map <leader>ew :e %%
+map <leader>es :sp %%
+map <leader>ev :vsp %%
+map <leader>et :tabe %%
+
 " Intuitives Springen durch Zeilen, die umgebrochen wurden.
 " Aus "Hacking Vim" von Kim Schulz
 map <DOWN> gj

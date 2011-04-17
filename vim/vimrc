@@ -107,9 +107,9 @@ if has("autocmd")
   autocmd FileType javascript setlocal sts=4 sw=4 noexpandtab
   autocmd BufNewFile,BufRead *.rss setfiletype xml
   " list view
-  autocmd FileType c,cpp,sh,python,tex setlocal list
+  autocmd FileType c,cpp,sh,python,tex,make setlocal list
   " formatoptions
-  autocmd FileType c,cpp,sh,python setlocal formatoptions=croqn
+  autocmd FileType c,cpp,sh,python,make setlocal formatoptions=croqn
   autocmd FileType tex setlocal formatoptions=tcroqlwn
   autocmd FileType text setlocal formatoptions=tcroqn
   autocmd FileType text,c,cpp,tex,sh,python setlocal textwidth=78

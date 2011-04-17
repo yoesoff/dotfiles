@@ -186,7 +186,8 @@ hi Search          guifg=#ffffe0 guibg=#284f28
 hi SpecialChar     guifg=#dca3a3 gui=bold
 hi SpecialComment  guifg=#82a282 gui=bold
 hi Special         guifg=#cfbfaf
-hi SpecialKey      guifg=#9ece9e
+"hi SpecialKey      guifg=#9ece9e
+hi SpecialKey      guifg=#5b605e
 hi Statement       guifg=#e3ceab gui=none
 hi StatusLine      guifg=#313633 guibg=#ccdc90
 hi StatusLineNC    guifg=#2e3330 guibg=#88b090

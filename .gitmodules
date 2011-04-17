@@ -90,3 +90,7 @@
 	path = vim/bundle/bufkill
 	url = https://github.com/vim-scripts/bufkill.vim.git
 	ignore = dirty
+[submodule "vim/bundle/gist"]
+	path = vim/bundle/gist
+	url = https://github.com/mattn/gist-vim.git
+	ignore = dirty

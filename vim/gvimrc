@@ -68,6 +68,9 @@ set guioptions-=r
 " Eine andere gute Alternative zu sienna ist biogoo
 colorscheme zenburn
 
+" gnome-terminal zur Anzeige von man-pages
+set keywordprg=gnome-terminal\ -e\ man\\
+
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros
 "---------------------------------------------------------------------

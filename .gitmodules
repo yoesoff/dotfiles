@@ -78,3 +78,7 @@
 	path = vim/bundle/speeddating
 	url = https://github.com/tpope/vim-speeddating.git
 	ignore = dirty
+[submodule "vim/bundle/hexhighlight"]
+	path = vim/bundle/hexhighlight
+	url = https://github.com/yurifury/hexHighlight.git
+	ignore = dirty

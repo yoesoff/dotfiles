@@ -63,6 +63,10 @@ set incsearch		" do incremental searching
 " Aus vimrc_example von Bram Moolenar
 set mouse=a
 
+" Allow moving after the end of line in visual block mode.
+" ctrl+v $ still selects to individual line ends.
+set virtualedit+=block
+
 " Switch syntax highlighting on, when the terminal has colors
 " Also switch on highlighting the last used search pattern.
 " Aus vimrc_example von Bram Moolenar
@@ -251,9 +255,19 @@ imap <A-0> <C-o>g^
 " Key mappings für eigene Makros
 "---------------------------------------------------------------------
 
+let mapleader = ','
+
 " Don't use Ex mode, use Q for formatting
 " Aus vimrc_example von Bram Moolenar
 map Q gq
+
+" Show quickfix window for current search with <leader>q/
+nnoremap <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" Further quickfix mappings
+nnoremap <leader>qo :copen<CR>
+nnoremap <leader>qc :cclose<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprevios<CR>
 
 " Toggle automatic formatting
 map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>

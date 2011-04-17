@@ -82,3 +82,7 @@
 	path = vim/bundle/hexhighlight
 	url = https://github.com/yurifury/hexHighlight.git
 	ignore = dirty
+[submodule "vim/bundle/proj"]
+	path = vim/bundle/proj
+	url = https://github.com/tmallen/proj-vim.git
+	ignore = dirty

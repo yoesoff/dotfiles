@@ -305,6 +305,11 @@ let g:snips_author = 'Andreas Herrmann'
 " To redifine the trigger key, refer tp :help snipMate-remap
 " Indentation is affected by softtabstop or expandtab
 
+" NERD-Commenter
+" --------------
+let NERDRemoveExtraSpaces = 1
+let NERDSpaceDelims = 1
+
 " NERD-Tree
 " ---------
 map <F2> :NERDTreeToggle<CR>

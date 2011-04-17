@@ -153,10 +153,11 @@ colorscheme zenburn
 " Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
 " geklaut aus der VIM-Wiki:
 " http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
-set statusline=%<%f%h%m%r%{fugitive#statusline()}\ [%{&ff}]%{\"
-    \[\".(&fenc==\"\"?&enc:&fenc).
-    \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
-    \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
+set statusline=%<%{SyntasticStatuslineFlag()}%f%h%m%r
+      \%{fugitive#statusline()}\ [%{&ff}]%{\"
+      \[\".(&fenc==\"\"?&enc:&fenc).
+      \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
+      \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
 set laststatus=2
 
 " Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
@@ -268,6 +269,11 @@ nnoremap <leader>qo :copen<CR>
 nnoremap <leader>qc :cclose<CR>
 nnoremap ]q :cnext<CR>
 nnoremap [q :cprevios<CR>
+" Some locationlist mappings
+nnoremap <leader>lo :lopen<CR>
+nnoremap <leader>lc :lclose<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [l :cprevious<CR>
 
 " Toggle automatic formatting
 map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
@@ -381,6 +387,14 @@ set grepprg=grep\ -nH\ $*\ /dev/null
 let g:gist_clip_command = 'xclip -selection clipboard'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
+
+" Syntastic
+" ---------
+let g:syntastic_enable_signs = 1
+" let g:syntastic_auto_jump = 1
+" Either type :Errors or use <leader>lo to open the location list.
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
 
 "---------------------------------------------------------------------
 " Spielplatz

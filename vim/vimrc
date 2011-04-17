@@ -187,8 +187,10 @@ if has("autocmd")
   " :autocmd! config to disable automatic sourcing
   augroup config
     au!
-    autocmd bufwritepost .vimrc source $MYVIMRC | let &ft=&ft
-    autocmd bufwritepost .gvimrc source $MYGVIMRC | let &ft=&ft
+    autocmd bufwritepost .vimrc source $MYVIMRC |
+	  \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
+    autocmd bufwritepost .gvimrc if has('gui_running') | 
+	  \source $MYGVIMRC | let &ft=&ft | endif
   augroup END
 endif
 com! Evimrc tabedit $MYVIMRC
@@ -219,7 +221,7 @@ nmap _= :call Preserve("normal gg=G")<CR>
 "   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
 "                   ⍽ 9085(x237D), ␣ 9251(x2423)
 if has("multi_byte")
-  set listchars=tab:▸╴,eol:¬,nbsp:⍽,trail:␣
+  set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
 endif
 
 " Soft linewrapping

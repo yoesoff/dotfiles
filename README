@@ -15,7 +15,7 @@ Create symlinks:
 Switch to the ~/.dotfiles directory, and fetch submodules:
 
     cd ~/.dotfiles
-    git submodule update --init
+    git submodule update --init --recursive
 
 
 Useful aliases

@@ -398,6 +398,8 @@ let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
 
 " Clang-Complete
 " --------------
+" unfortunately too slow
+let g:clang_complete_auto = 0
 if filereadable($HOME.'/lib/libclang.so')
   let g:clang_use_library = 1
   let g:clang_library_path = $HOME.'/lib'

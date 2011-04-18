@@ -365,6 +365,11 @@ let g:snips_author = 'Andreas Herrmann'
 " To redifine the trigger key, refer tp :help snipMate-remap
 " Indentation is affected by softtabstop or expandtab
 
+" surround
+" --------
+" Leave visual mode s mapping alone.
+xmap <leader>s <Plug>Vsurround
+
 " NERD-Commenter
 " --------------
 let NERDRemoveExtraSpaces = 1

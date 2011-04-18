@@ -102,3 +102,7 @@
 	path = vim/bundle/clang_complete
 	url = https://github.com/Rip-Rip/clang_complete.git
 	ignore = dirty
+[submodule "vim/bundle/pyflakes"]
+	path = vim/bundle/pyflakes
+	url = https://github.com/kevinw/pyflakes-vim.git
+	ignore = dirty

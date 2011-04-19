@@ -257,6 +257,10 @@ if has("multi_byte")
   set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
 endif
 
+" chmod of current file
+command! -nargs=? Chmod :!chmod <q-args> "%"
+nnoremap <silent> <leader>X :Chmod +x
+
 " Soft linewrapping
 "   to insert unicode characters use ctrl-vu charcode
 if has("multi_byte")

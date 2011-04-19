@@ -1,0 +1,18 @@
+#!/bin/bash
+
+url="$1"
+bundle="$2"
+directory="vim/bundle/${bundle}"
+set -e
+
+trap "Failed to install \`${bundle}'" ERR
+
+if [[ -d "$directory" ]]; then
+  echo "\`${directory}' already exists. Cannot install \`${bundle}'."
+  exit 1
+else
+  git submodule add "$url" "$directory"
+  git config -f .gitmodules "submodule.$directory.ignore" dirty
+  git add .gitmodules
+  git commit -m "Installed \`${bundle}' as a submodule."
+fi

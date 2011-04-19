@@ -1,0 +1,16 @@
+#!/bin/bash
+
+url="$1"
+bundle="$2"
+directory="vim/bundle/${bundle}"
+set -e
+
+trap "Failed to install \`${bundle}'" ERR
+
+if [[ -d "$directory" ]]; then
+  git add "$directory"
+  git commit -m "Installed \`${bundle}'."
+else
+  echo "\`${directory}' is not a directory. Cannot install \`${bundle}'."
+  exit 1
+fi

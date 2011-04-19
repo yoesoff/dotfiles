@@ -1,0 +1,18 @@
+#!/bin/bash
+
+bundle="$1"
+directory="vim/bundle/${bundle}"
+set -e
+
+trap "Failed to uninstall \`${bundle}'" ERR
+
+if [[ -d "$directory" ]]; then
+  git config -f .gitmodules --remove-section "submodule.$directory"
+  git config -f .git/config --remove-section "submodule.$directory"
+  git rm --cached "$directory"
+  git commit -m "Removed bundle \`${bundle}'"
+  rm -rfI "$directory"
+else
+  echo "\`${directory}' is not a directory. Cannot remove \`${bundle}'."
+  exit 1
+fi

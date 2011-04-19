@@ -1,0 +1,21 @@
+#!/bin/bash
+
+scripts=".gitscripts"
+set -e
+
+trap "echo Failed to generate aliases. >2" ERR
+
+i=0
+
+for file in .gitscripts/*; do
+  if [[ -x "$file" && -f "$file" && ! ( "$file" == *~ ) ]]; then
+    i=$((i+1))
+    alias=$(echo "$file" | sed -r 's,[^/]*/(.*$),\1,;s,\ ,_,g')
+    echo "Adding \`$file' as alias \`$alias'."
+    git config "alias.$alias" '!sh -c "'"${file}"'"'
+  fi
+done
+
+if [[ $i -eq 0 ]];then
+  echo "No executables in $(readlink -f ${scripts})"
+fi

@@ -387,6 +387,10 @@ map <F2> :NERDTreeToggle<CR>
 " -----
 nnoremap <F3> :GundoToggle<CR>
 
+" TagList
+" -------
+nnoremap <F4> :TlistToggle<CR>
+
 " Alternate
 " ---------
 map <leader>a :A<CR>

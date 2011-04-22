@@ -259,7 +259,7 @@ endif
 
 " chmod of current file
 command! -nargs=? Chmod :!chmod <q-args> "%"
-nnoremap <silent> <leader>X :Chmod +x
+nnoremap <silent> <leader>X :Chmod +x<CR>
 
 " Soft linewrapping
 "   to insert unicode characters use ctrl-vu charcode

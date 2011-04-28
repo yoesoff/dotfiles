@@ -9,10 +9,20 @@ alias l='ls -CF'
 alias rscp='rsync -aP --no-whole-file --inplace'
 alias rsmv='rscp --remove-source-files'
 
+# debian packages
+alias asearch="aptitude search"
+alias ashow="aptitude show"
+alias ainstall="aptitude install"
+alias dpkgl="dpkg -L"
+alias dpkgs="dpkg -S"
+
 # other programs 
 alias lmk="latexmk -silent -pdf"
 alias matlab="matlab -nosplash"
 alias fluidsynth-font="fluidsynth /usr/share/sounds/sf2/CT4MGM.SF2"
+
+# patches
+alias mkpatch="diff -Naur"
 
 # compile optimized
 alias gcc02="gcc -O2 -DNDEBUG"

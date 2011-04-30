@@ -344,6 +344,12 @@ map <UP> gk
 imap <DOWN> <C-o>gj
 imap <UP> <C-o>gk
 
+" Single line scrolling
+nmap <C-PageUP> <C-Y>
+nmap <C-PageDown> <C-E>
+imap <C-PageUP> <C-o><C-Y>
+imap <C-PageDown> <C-o><C-E>
+
 " Text bubbling - http://vimcasts.org/episodes/bubbling-text/
 " using the unimpared.vim package
 nmap <C-Up> [e

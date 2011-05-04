@@ -102,3 +102,7 @@
 	path = vim/bundle/pyflakes
 	url = git://github.com/kevinw/pyflakes-vim.git
 	ignore = dirty
+[submodule "vim/bundle/tagbar"]
+	path = vim/bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
+	ignore = dirty

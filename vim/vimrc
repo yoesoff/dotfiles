@@ -466,9 +466,9 @@ let g:syntastic_disabled_filetypes = ['c', 'cpp', 'tex']
 " --------------
 " unfortunately too slow
 let g:clang_complete_auto = 0
-if filereadable($HOME.'/lib/libclang.so')
+if filereadable($HOME.'/usr/lib/libclang.so')
   let g:clang_use_library = 1
-  let g:clang_library_path = $HOME.'/lib'
+  let g:clang_library_path = $HOME.'/usr/lib'
 endif
 
 "---------------------------------------------------------------------

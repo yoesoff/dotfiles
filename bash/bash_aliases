@@ -16,6 +16,11 @@ alias ainstall="aptitude install"
 alias dpkgl="dpkg -L"
 alias dpkgs="dpkg -S"
 
+# rlwrap aliases
+if which rlwrap >/dev/null ; then
+  alias pacmd="rlwrap -b '(){}[],+=&^%\$#@\"\";|\' $(which pacmd)"
+fi
+
 # other programs 
 alias lmk="latexmk -silent -pdf"
 alias matlab="matlab -nosplash"

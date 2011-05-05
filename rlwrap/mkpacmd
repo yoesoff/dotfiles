@@ -1,0 +1,6 @@
+#!/bin/bash
+
+pactl --help \
+  | cut -f 3 -d ' ' \
+  | egrep -v '^[-]|^$' \
+  > pacmd_completions

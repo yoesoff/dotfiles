@@ -7,6 +7,8 @@ PATH="${HOME}/usr/bin:${HOME}/usr/games:${PATH}"
 CDPATH=.:~/Documents/ETHZ:~/Documents/ETHZ/FS2011:~/Documents/ETHZ/SA2011:
 PYTHONPATH=.:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
 
+RLWRAP_HOME="${HOME}/.dotfiles/rlwrap"
+
 # If not running interactively, don't do anything
 [[ -z "$PS1" ]] && return
 

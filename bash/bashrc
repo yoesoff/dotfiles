@@ -5,7 +5,7 @@
 # Environment
 PATH="${HOME}/usr/bin:${HOME}/usr/games:${PATH}"
 CDPATH=.:~/Documents/ETHZ:~/Documents/ETHZ/FS2011:~/Documents/ETHZ/SA2011:
-PYTHONPATH=.:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
+PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
 
 RLWRAP_HOME="${HOME}/.dotfiles/rlwrap"
 

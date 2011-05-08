@@ -73,9 +73,10 @@ if [[ -n "$force_color_prompt" ]]; then
 fi
 
 # git prompt settings - refer to /etc/bash_completion.d
-export GIT_PS1_SHOWDIRTYSTATE=1
-export GIT_PS1_SHOWSTASHSTATE=1
-export GIT_PS1_SHOWUNTRACKEDFILES=1
+# dynamic git prompt (warning: can be very slow)
+# export GIT_PS1_SHOWDIRTYSTATE=1
+# export GIT_PS1_SHOWSTASHSTATE=1
+# export GIT_PS1_SHOWUNTRACKEDFILES=1
 if [[ "$color_prompt" = yes ]]; then
   GIT_PS1='$(__git_ps1 "(%s)")'
 else

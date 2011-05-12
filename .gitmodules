@@ -114,3 +114,7 @@
 	path = vim/bundle/gitv
 	url = git://github.com/gregsexton/gitv.git
 	ignore = dirty
+[submodule "vim/bundle/tasklist"]
+	path = vim/bundle/tasklist
+	url = git://github.com/vim-scripts/TaskList.vim.git
+	ignore = dirty

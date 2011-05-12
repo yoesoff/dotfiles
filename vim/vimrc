@@ -471,6 +471,10 @@ if filereadable($HOME.'/usr/lib/libclang.so')
   let g:clang_library_path = $HOME.'/usr/lib'
 endif
 
+" Task-List
+" ---------
+map <leader>d <Plug>TaskList
+
 "---------------------------------------------------------------------
 " Spielplatz
 "---------------------------------------------------------------------

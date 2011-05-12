@@ -106,3 +106,7 @@
 	path = vim/bundle/tagbar
 	url = git://github.com/majutsushi/tagbar.git
 	ignore = dirty
+[submodule "vim/bundle/pydoc"]
+	path = vim/bundle/pydoc
+	url = git://github.com/fs111/pydoc.vim.git
+	ignore = dirty

@@ -383,6 +383,12 @@ imap <C-BS> <C-w>
 " Aus "Hacking Vim" von Kim Schulz
 map <F1> <ESC>:exec "help ".expand("<cWORD>")<CR>
 
+" Go to next and previous file
+nnoremap <C-right> :next<CR>
+nnoremap <C-left> :prev<CR>
+nnoremap <C-home> :first<CR>
+nnoremap <C-end> :last<CR>
+
 "---------------------------------------------------------------------
 " Skript-spezifische Einstellungen
 "---------------------------------------------------------------------

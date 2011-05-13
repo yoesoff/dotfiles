@@ -222,7 +222,7 @@ function! Preserve(command)
 endfunction
 
 " Underlining tool
-function s:Underline(chars)
+function! s:Underline(chars)
   let chars = empty(a:chars) ? '-' : a:chars
   let nb_chars = len(chars)
   let nb_columns = virtcol('$') - 1

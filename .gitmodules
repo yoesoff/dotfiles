@@ -122,3 +122,7 @@
 	path = vim/bundle/fuzzyfinder
 	url = git://github.com/vim-scripts/FuzzyFinder.git
 	ignore = dirty
+[submodule "vim/bundle/L9"]
+	path = vim/bundle/L9
+	url = git://github.com/vim-scripts/L9.git
+	ignore = dirty

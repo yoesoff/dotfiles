@@ -8,7 +8,6 @@ PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/l
 
 DOTFILES="${HOME}/.dotfiles"
 BASH_HOME="${DOTFILES}/bash"
-
 RLWRAP_HOME="${DOTFILES}/rlwrap"
 
 # import some local settings

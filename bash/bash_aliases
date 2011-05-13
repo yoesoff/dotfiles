@@ -16,6 +16,9 @@ alias ainstall="aptitude install"
 alias dpkgl="dpkg -L"
 alias dpkgs="dpkg -S"
 
+# vim
+alias g="gvim --remote-silent"
+
 # rlwrap aliases
 if which rlwrap >/dev/null ; then
   alias pacmd="rlwrap -b '(){}[],+=&^%\$#@\"\";|\' $(which pacmd)"

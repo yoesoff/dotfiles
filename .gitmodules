@@ -118,3 +118,7 @@
 	path = vim/bundle/tasklist
 	url = git://github.com/vim-scripts/TaskList.vim.git
 	ignore = dirty
+[submodule "vim/bundle/fuzzyfinder"]
+	path = vim/bundle/fuzzyfinder
+	url = git://github.com/vim-scripts/FuzzyFinder.git
+	ignore = dirty

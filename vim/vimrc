@@ -521,6 +521,9 @@ nnoremap <silent> <leader>sh     :FufHelp<CR>
 nnoremap <silent> <leader>se     :FufEditDataFile<CR>
 nnoremap <silent> <leader>sr     :FufRenewCache<CR>
 
+" Pep-8
+" -----
+let g:pep8_map = '<leader>8'
 
 "---------------------------------------------------------------------
 " Spielplatz

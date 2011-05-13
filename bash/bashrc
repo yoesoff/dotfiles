@@ -4,13 +4,20 @@
 
 # Environment
 PATH="${HOME}/usr/bin:${HOME}/usr/games:${PATH}"
-CDPATH=.:~/Documents/ETHZ:~/Documents/ETHZ/FS2011:~/Documents/ETHZ/SA2011:
 PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
 
-RLWRAP_HOME="${HOME}/.dotfiles/rlwrap"
+DOTFILES="${HOME}/.dotfiles"
+BASH_HOME="${DOTFILES}/bash"
+
+RLWRAP_HOME="${DOTFILES}/rlwrap"
+
+# import some local settings
+[ -f "${BASH_HOME}/local" ] && source "${BASH_HOME}/local"
+[ -f "${BASH_HOME}/private" ] && source "${BASH_HOME}/private"
+
 
 # If not running interactively, don't do anything
-[[ -z "$PS1" ]] && return
+[ -z "$PS1" ] && return
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
@@ -34,15 +41,15 @@ shopt -s checkwinsize
 # enable programmable completion features (you don't need to enable
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
-if [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
 # make less more friendly for non-text input files, see lesspipe(1)
-[[ -x /usr/bin/lesspipe ]] && eval "$(SHELL=/bin/sh lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
 
 # set variable identifying the chroot you work in (used in the prompt below)
-if [[ -z "$debian_chroot" ]] && [[ -r /etc/debian_chroot ]]; then
+if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
@@ -61,8 +68,8 @@ esac
 # should be on the output of commands, not on the prompt
 #force_color_prompt=yes
 
-if [[ -n "$force_color_prompt" ]]; then
-    if [[ -x /usr/bin/tput ]] && tput setaf 1 >&/dev/null; then
+if [ -n "$force_color_prompt" ]; then
+    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	# We have color support; assume it's compliant with Ecma-48
 	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
 	# a case would tend to support setf rather than setaf.)
@@ -77,7 +84,7 @@ fi
 # export GIT_PS1_SHOWDIRTYSTATE=1
 # export GIT_PS1_SHOWSTASHSTATE=1
 # export GIT_PS1_SHOWUNTRACKEDFILES=1
-if [[ "$color_prompt" = yes ]]; then
+if [ yes = "$color_prompt" ]; then
   GIT_PS1='$(__git_ps1 "(%s)")'
 else
   GIT_PS1='$(__git_ps1 " (%s)")'
@@ -104,8 +111,9 @@ xterm*|rxvt*)
 esac
 
 # enable color support of ls and also add handy aliases
-if [[ -x /usr/bin/dircolors ]]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+if [ -x /usr/bin/dircolors ]; then
+    [ -r ~/.dircolors ] && eval "$(dircolors -b ~/.dircolors)" \
+      || eval "$(dircolors -b)"
     alias ls='ls --color=auto -B --group-directories-first'
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
@@ -116,22 +124,14 @@ if [[ -x /usr/bin/dircolors ]]; then
 fi
 
 
-BASH_DIR=~/.dotfiles/bash
-
 # Alias definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_aliases, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [[ -f "${BASH_DIR}/bash_aliases" ]]; then
-    . "${BASH_DIR}/bash_aliases"
-fi
+[ -f "${BASH_HOME}/bash_aliases" ] && source "${BASH_HOME}/bash_aliases"
 
 # Function definitions.
 # You may want to put all your additions into a separate file like
 # ~/.bash_functions, instead of adding them here directly.
 # See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [[ -f "${BASH_DIR}/bash_functions" ]]; then
-    . "${BASH_DIR}/bash_functions"
-fi
+[ -f "${BASH_HOME}/bash_functions" ] && source "${BASH_HOME}/bash_functions"

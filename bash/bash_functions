@@ -1,7 +1,5 @@
 #!/bin/bash
 
-BASH_DIR=~/.dotfiles/bash
-
 # Print full path of passed files
 path()
 {
@@ -37,6 +35,4 @@ coffee()
 }
 
 # Thesaurus
-if [[ -f "${BASH_DIR}/func_thesaurus" ]]; then
-  source "${BASH_DIR}/func_thesaurus" 
-fi
+[ -f "${BASH_HOME}/func_thesaurus" ] && source "${BASH_HOME}/func_thesaurus"

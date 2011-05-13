@@ -130,3 +130,7 @@
 	path = vim/bundle/rope
 	url = git://github.com/sontek/rope-vim.git
 	ignore = dirty
+[submodule "vim/bundle/pep8"]
+	path = vim/bundle/pep8
+	url = git://github.com/vim-scripts/pep8.git
+	ignore = dirty

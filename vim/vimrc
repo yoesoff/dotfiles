@@ -540,6 +540,19 @@ nnoremap <silent> <leader>sr     :FufRenewCache<CR>
 " -----
 let g:pep8_map = '<leader>8'
 
+" Fugitive
+" --------
+if has("autocmd")
+  augroup Fugitive
+    au!
+    autocmd BufEnter fugitive://*
+	  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
+	  \   nnoremap <buffer> .. :edit %:h<CR> |
+	  \ endif |
+	  \ set bufhidden=delete |
+  augroup END
+endif
+
 "---------------------------------------------------------------------
 " Spielplatz
 "---------------------------------------------------------------------

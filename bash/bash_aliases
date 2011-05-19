@@ -28,6 +28,7 @@ fi
 alias lmk="latexmk -silent -pdf"
 alias matlab="matlab -nosplash"
 alias fluidsynth-font="fluidsynth /usr/share/sounds/sf2/CT4MGM.SF2"
+alias qmv="qmv -f destination-only"
 
 # patches
 alias mkpatch="diff -Naur"

@@ -9,6 +9,14 @@ path()
   echo
 }
 
+# Print arguments
+args()
+{
+  for arg in "$@"; do
+    echo "$arg"
+  done
+}
+
 # Wikipedia lookup
 wiki()
 {

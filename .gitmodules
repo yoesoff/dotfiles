@@ -138,3 +138,7 @@
 	path = vim/bundle/notes
 	url = git://github.com/xolox/vim-notes.git
 	ignore = dirty
+[submodule "vim/bundle/shell"]
+	path = vim/bundle/shell
+	url = git://github.com/vim-scripts/shell.vim--Odding.git
+	ignore = dirty

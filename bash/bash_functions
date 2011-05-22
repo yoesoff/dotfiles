@@ -17,6 +17,22 @@ args()
   done
 }
 
+# Vim Notes plugin
+note()
+{
+  if [ $# -lt 1 ]; then
+    gvim +Note
+  else
+    i=0
+    arg=()
+    for n in "$@"; do
+      arg[$i]="+Note ${n}"
+      : $((i++))
+    done
+    gvim "${arg[@]}"
+  fi
+}
+
 # Wikipedia lookup
 wiki()
 {

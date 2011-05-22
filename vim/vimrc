@@ -117,6 +117,13 @@ if has("autocmd")
   "   :set formatprg=par
   "   :set formatprg=par\ -w78
 
+  " C++ include path
+  let s:gpppath='g++ -v 2>&1 ' .
+	\ '|sed -r ''/--with-gxx-include-dir=/!d;' .
+	\ 's/.*--with-gxx-include-dir=(\S*).*/\1/'''
+  autocmd FileType cpp exec 'setlocal path+='.system(s:gpppath)
+  autocmd BufNewFile,BufRead /usr/include/c++* setfiletype cpp
+
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
   " (happens when dropping a file on gvim).

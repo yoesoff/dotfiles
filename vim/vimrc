@@ -340,10 +340,6 @@ map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
       \ set formatoptions+=a <Bar>
       \ endif<CR>
 
-" Ermöglicht es gf einzusetzen ohne vorher Änderungen speichern zu müssen.
-" VORSICHT: Vor einem :q! dreimal nachdenken!
-map gf :edit <cfile><CR>
-
 " mappings to easily edit files, that are within the same directory as the
 " current file.
 cnoremap %% <C-R>=expand('%:h').'/'<cr>

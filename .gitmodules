@@ -134,3 +134,7 @@
 	path = vim/bundle/pep8
 	url = git://github.com/vim-scripts/pep8.git
 	ignore = dirty
+[submodule "vim/bundle/notes"]
+	path = vim/bundle/notes
+	url = git://github.com/xolox/vim-notes.git
+	ignore = dirty

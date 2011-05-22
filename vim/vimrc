@@ -559,6 +559,11 @@ if has("autocmd")
   augroup END
 endif
 
+" Shell
+" -----
+let g:shell_mappings_enable = 0
+nmap <silent> go :Open<CR>
+
 "---------------------------------------------------------------------
 " Spielplatz
 "---------------------------------------------------------------------

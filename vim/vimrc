@@ -307,6 +307,10 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 endif
 
+" Use undofile
+" [refer to http://amix.dk/blog/post/19548]
+set undofile
+
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros
 "---------------------------------------------------------------------

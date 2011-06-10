@@ -12,10 +12,14 @@ Create symlinks:
     ln -s ~/.dotfiles/bash/bash_profile ~/.bash_profile
     ln -s ~/.dotfiles/bash/bash_logout ~/.bash_logout
 
-Switch to the ~/.dotfiles directory, and fetch submodules:
+Switch to the ~/.dotfiles directory, and install vundle:
 
     cd ~/.dotfiles
-    git submodule update --init --recursive
+    git clone http://github.com/gmarik/vundle.git vim/vundles/vundle
+
+Open vim and install bundles:
+
+    :BundleInstall
 
 
 Useful aliases

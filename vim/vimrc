@@ -30,6 +30,54 @@
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+" Vundle
+" ------
+set nocompatible
+filetype off
+set rtp+=$HOME/.vim/vundles/vundle
+call vundle#rc($HOME . '/.vim/vundles')
+Bundle 'gmarik/vundle'
+
+" -------------------------------------------------------------------
+" VUNDLES
+" -------------------------------------------------------------------
+Bundle 'altercation/vim-colors-solarized.git'
+Bundle 'fs111/pydoc.vim.git'
+Bundle 'godlygeek/csapprox.git'
+Bundle 'godlygeek/tabular.git'
+Bundle 'gregsexton/gitv.git'
+Bundle 'kevinw/pyflakes-vim.git'
+Bundle 'Lokaltog/vim-easymotion.git'
+Bundle 'majutsushi/tagbar.git'
+Bundle 'mattn/gist-vim.git'
+Bundle 'msanders/snipmate.vim.git'
+Bundle 'Rip-Rip/clang_complete.git'
+Bundle 'scrooloose/nerdcommenter.git'
+Bundle 'scrooloose/nerdtree.git'
+Bundle 'scrooloose/syntastic.git'
+Bundle 'sjl/gundo.vim.git'
+Bundle 'sontek/rope-vim.git'
+Bundle 'tmallen/proj-vim.git'
+Bundle 'tpope/vim-fugitive.git'
+Bundle 'tpope/vim-repeat.git'
+Bundle 'tpope/vim-speeddating.git'
+Bundle 'tpope/vim-surround.git'
+Bundle 'tpope/vim-unimpaired.git'
+Bundle 'vim-scripts/bufkill.vim.git'
+Bundle 'vim-scripts/FuzzyFinder.git'
+Bundle 'vim-scripts/info.vim.git'
+Bundle 'vim-scripts/Justify.git'
+Bundle 'vim-scripts/L9.git'
+Bundle 'vim-scripts/pep8.git'
+Bundle 'vim-scripts/python_match.vim.git'
+Bundle 'vim-scripts/ScrollColors.git'
+Bundle 'vim-scripts/shell.vim--Odding.git'
+Bundle 'vim-scripts/taglist.vim.git'
+Bundle 'vim-scripts/TaskList.vim.git'
+Bundle 'vim-scripts/Vimball.git'
+Bundle 'xolox/vim-notes.git'
+Bundle 'yurifury/hexHighlight.git'
+"---------------------------------------------------------------------
 
 "---------------------------------------------------------------------
 " Generelle Einstellungen

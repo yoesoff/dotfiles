@@ -1,0 +1,33 @@
+#!/bin/bash
+
+# Bundle list
+echo "Add this to your vimrc:"
+echo
+git submodule foreach --quiet 'echo $path' | sed '/vim\/bundle\//!d' | \
+  while read bundle; do
+    url="$(git config --local submodule."$bundle".url)"
+    if [[ $url = *github.com* ]]; then
+      vundle="$(sed 's,.*://github.com/,,' <<< "$url")"
+    else
+      vundle="$url"
+    fi
+    echo "Bundle '$vundle'"
+  done
+
+# Remove submodules
+while true; do
+  read -n 1 -p "remove the submodules? (y/n): " ans; echo
+  if [[ $ans == y ]]; then
+    git submodule foreach --quiet '
+    if echo "$path" | grep -q "^vim/bundle/"; then
+      cd $toplevel
+      git config --local --remove-section "submodule.$name"
+      git config -f .gitmodules --remove-section "submodule.$name"
+      rm -rf "$path"
+    fi
+    '
+    break
+  elif [[ $ans == n ]]; then
+    break
+  fi
+done

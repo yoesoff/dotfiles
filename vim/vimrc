@@ -201,7 +201,15 @@ command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 	 	\ | wincmd p | diffthis
 
 " Farbschema für Vim auf der Konsole setzen.
-colorscheme zenburn
+if !has('gui_running')
+  if &t_Co >= 88
+    colorscheme zenburn
+  else
+    " Don't load CSApprox. No point in using it...
+    let g:CSApprox_loaded = 1
+    colorscheme delek
+  endif
+endif
 
 " Informative Statuszeile, die immer sichtbar ist
 " Aus "Hacking Vim" von Kim Schulz

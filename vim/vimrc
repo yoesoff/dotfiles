@@ -33,7 +33,6 @@ call pathogen#helptags()
 " Vundle
 " ------
 set nocompatible
-filetype off
 set rtp+=$HOME/.vim/vundles/vundle
 call vundle#rc($HOME . '/.vim/vundles')
 Bundle 'gmarik/vundle'

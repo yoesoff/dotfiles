@@ -1,31 +1,53 @@
 #!/bin/bash
 
+# Run this script in git root-directory.
+#
+# Bundles directory relative to git root-directory. E.g. `vim/bundle/'
+export bundledir="vim/bundle/"
+
 # Bundle list
 echo "Add this to your vimrc:"
 echo
-git submodule foreach --quiet 'echo $path' | sed '/vim\/bundle\//!d' | \
+failed=0
+set -o pipefail
+git submodule foreach --quiet 'echo $path' | sed '\:'"$bundledir"':!d' | \
   while read bundle; do
     url="$(git config --local submodule."$bundle".url)"
-    if [[ $url = *github.com* ]]; then
+    if [[ ${#url} = 0 ]]; then
+      echo "!!! No git url for submodule \`$bundle'. Aborting" >&2
+      echo "    Try \`git submodule init'" >&2
+      exit 1
+    elif [[ $url = *github.com* ]]; then
       vundle="$(sed 's,.*://github.com/,,' <<< "$url")"
     else
       vundle="$url"
     fi
     echo "Bundle '$vundle'"
-  done
+  done | sort || failed=1
+
+if [[ 1 = $failed ]]; then
+  echo "!!! FAILED"
+  exit 1
+fi
 
 # Remove submodules
+echo
+echo "Do you wish to remove the corresponding git-submodules automatically?"
+echo "Note: This will add changes to the index. It will not commit them."
+echo "      Creating a backup beforehand is strongly recommended."
 while true; do
-  read -n 1 -p "remove the submodules? (y/n): " ans; echo
+  read -n 1 -p "remove submodules? (y/n): " ans; echo
   if [[ $ans == y ]]; then
     git submodule foreach --quiet '
-    if echo "$path" | grep -q "^vim/bundle/"; then
+    if echo "$path" | grep -q "^'"$bundledir"'"; then
       cd $toplevel
       git config --local --remove-section "submodule.$name"
       git config -f .gitmodules --remove-section "submodule.$name"
       rm -rf "$path"
+      git rm "$path"
     fi
     '
+    git add .gitmodules
     break
   elif [[ $ans == n ]]; then
     break

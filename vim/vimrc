@@ -124,8 +124,7 @@ endif
 
 " Searching test will find test, Test, tEst, etc.
 " while search Test will find Test.
-" set ignorecase
-set smartcase
+set ignorecase smartcase
 
 " Lilypond config file
 set runtimepath+=/usr/share/lilypond/2.10.33/vim/

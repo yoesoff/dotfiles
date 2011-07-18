@@ -449,6 +449,10 @@ nnoremap <C-right> :next<CR>
 nnoremap <C-left> :prev<CR>
 nnoremap <C-home> :first<CR>
 nnoremap <C-end> :last<CR>
+nnoremap <C-S-right> :bnext<CR>
+nnoremap <C-S-left> :bprev<CR>
+nnoremap <C-S-home> :bfirst<CR>
+nnoremap <C-S-end> :blast<CR>
 
 "---------------------------------------------------------------------
 " Skript-spezifische Einstellungen

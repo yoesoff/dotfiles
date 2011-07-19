@@ -41,6 +41,7 @@ Bundle 'gmarik/vundle'
 " VUNDLES
 " -------------------------------------------------------------------
 Bundle 'bufkill.vim.git'
+Bundle 'Conque-Shell'
 Bundle 'FuzzyFinder.git'
 Bundle 'info.vim.git'
 Bundle 'Justify.git'

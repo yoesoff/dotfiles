@@ -1,0 +1,42 @@
+# description
+snippet desc
+	\begin{description}
+		\item[$1] $2
+	\end{description}
+
+snippet it
+	\item $1
+
+snippet it[
+	\item[$1] $2
+
+# letter
+snippet letter
+	\documentclass[${1:SN}]{scrlttr2}
+	
+	\usepackage[utf8x]{inputenc}
+	\usepackage[ngerman]{babel}
+	
+	\usepackage{graphicx}
+	
+	\begin{document}
+	
+	\setkomavar{fromname}{${2:`$FULLNAME`}}
+	\setkomavar{fromaddress}{${3:`$FULLADDRESS_TEX`}}
+	\setkomavar{place}{${4:`$CITY`}}
+	\setkomavar{subject}{${6}}
+	
+	\begin{letter}{%
+	  ${5}}
+	
+	  \opening{${7:Sehr geehrte Damen und Herren,}}
+	
+	  ${10}
+	
+	  \closing{${8:Mit freundlichen Grüßen,}}
+	
+	  ${9:\encl{}}
+	
+	\end{letter}
+	
+	\end{document}

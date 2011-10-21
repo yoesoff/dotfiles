@@ -37,6 +37,10 @@ set rtp+=$HOME/.vim/vundles/vundle
 call vundle#rc($HOME . '/.vim/vundles')
 Bundle 'gmarik/vundle'
 
+" Map leader
+" ----------
+let mapleader = ','
+
 " -------------------------------------------------------------------
 " VUNDLES                                                        {{{1
 " -------------------------------------------------------------------
@@ -383,8 +387,6 @@ set undofile
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros                                  {{{1
 "---------------------------------------------------------------------
-
-let mapleader = ','
 
 " Underline mappings  {{{
 nnoremap <silent> <leader>u :Underline -<CR>

@@ -63,6 +63,7 @@ Bundle 'Lokaltog/vim-easymotion.git'
 Bundle 'majutsushi/tagbar.git'
 Bundle 'mattn/gist-vim.git'
 Bundle 'msanders/snipmate.vim.git'
+Bundle 'rainbow_parentheses.vim'
 Bundle 'Rip-Rip/clang_complete.git'
 Bundle 'scrooloose/nerdcommenter.git'
 Bundle 'scrooloose/nerdtree.git'
@@ -629,6 +630,14 @@ endif
 " -----
 let g:shell_mappings_enable = 0
 nmap <silent> go :Open<CR>
+
+" Rainbow Parenthesis
+" -------------------
+nmap <silent> <leader>rb<space> :RainbowParenthesesToggle<CR>
+nmap <silent> <leader>rb( :RainbowParenthesesLoadRound<CR>
+nmap <silent> <leader>rb[ :RainbowParenthesesLoadSquare<CR>
+nmap <silent> <leader>rb{ :RainbowParenthesesLoadBraces<CR>
+nmap <silent> <leader>rb< :RainbowParenthesesLoadChevrons<CR>
 
 "---------------------------------------------------------------------
 " Spielplatz

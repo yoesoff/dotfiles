@@ -153,6 +153,7 @@ if has("autocmd")
 	\ setlocal sts=2 sw=2
   autocmd FileType c,cpp setlocal sw=4 noexpandtab
   autocmd FileType python setlocal sw=4 sts=4 expandtab
+	\ foldmethod=indent foldnestmax=2 foldcolumn=2
   autocmd FileType javascript setlocal sts=4 sw=4 noexpandtab
   autocmd BufNewFile,BufRead *.rss setfiletype xml
   " list view
@@ -456,6 +457,9 @@ nnoremap <C-S-right> :bnext<CR>
 nnoremap <C-S-left> :bprev<CR>
 nnoremap <C-S-home> :bfirst<CR>
 nnoremap <C-S-end> :blast<CR>
+
+" toggle folds with space bar
+nnoremap <space> za
 
 "---------------------------------------------------------------------
 " Skript-spezifische Einstellungen

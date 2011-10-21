@@ -1,5 +1,5 @@
 "--------------------------------------------------------------------
-" Vim Einstellungsdatei
+" Vim Einstellungsdatei                                          {{{1
 "--------------------------------------------------------------------
 " Diese Datei sollte alle Einstellungen enthalten, die Vim im
 " Allgemeinen und im Speziellen betreffen. Einstellungen, die GVim
@@ -38,7 +38,7 @@ call vundle#rc($HOME . '/.vim/vundles')
 Bundle 'gmarik/vundle'
 
 " -------------------------------------------------------------------
-" VUNDLES
+" VUNDLES                                                        {{{1
 " -------------------------------------------------------------------
 Bundle 'bufkill.vim.git'
 Bundle 'Conque-Shell'
@@ -82,7 +82,7 @@ Bundle 'yurifury/hexHighlight.git'
 "---------------------------------------------------------------------
 
 "---------------------------------------------------------------------
-" Generelle Einstellungen
+" Generelle Einstellungen                                         {{{1
 "---------------------------------------------------------------------
 
 " When started as "evim", evim.vim will already have done these settings.
@@ -134,7 +134,7 @@ set runtimepath+=/usr/share/lilypond/2.10.33/vim/
 
 " Only do this part when compiled with support for autocommands.
 " Aus vimrc_example von Bram Moolenar
-if has("autocmd")
+if has("autocmd")  " {{{
 
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -151,6 +151,7 @@ if has("autocmd")
   autocmd FileType gitconfig setlocal sw=8 noexpandtab
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
+  autocmd FileType vim setlocal foldmethod=marker
   autocmd FileType c,cpp setlocal sw=4 noexpandtab
   autocmd FileType python setlocal sw=4 sts=4 expandtab
 	\ foldmethod=indent foldnestmax=2 foldcolumn=2
@@ -194,7 +195,7 @@ else
 
   set autoindent		" always set autoindenting on
 
-endif " has("autocmd")
+endif " has("autocmd") }}}
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -202,6 +203,7 @@ endif " has("autocmd")
 command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 	 	\ | wincmd p | diffthis
 
+" color scheme  {{{
 " Farbschema für Vim auf der Konsole setzen.
 if !has('gui_running')
   if &t_Co >= 88
@@ -212,7 +214,9 @@ if !has('gui_running')
     colorscheme delek
   endif
 endif
+" }}}
 
+" Status line  {{{
 " Informative Statuszeile, die immer sichtbar ist
 " Aus "Hacking Vim" von Kim Schulz
 " Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
@@ -227,6 +231,7 @@ set statusline=%<
       \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
       \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
 set laststatus=2
+" }}}
 
 " Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
 " sollte in ftplugins gesetzt werden.
@@ -257,7 +262,7 @@ set smarttab
 com! CD cd %:p:h
 com! LCD lcd %:p:h
 
-" Quick editing and automatic sourcing of vimrc file.
+" Quick editing and automatic sourcing of vimrc file.  {{{
 if has("autocmd")
   " :autocmd! config to disable automatic sourcing
   augroup config
@@ -272,7 +277,9 @@ com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
 com! Sorc source $MYVIMRC | 
       \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
+" }}}
 
+" Preserve cursor position  {{{
 " A function, that preserves the cursor position while executing a command.
 function! Preserve(command)
   " Preparation: save last search, and cursor position.
@@ -285,8 +292,9 @@ function! Preserve(command)
   let @/=_s
   call cursor(l, c)
 endfunction
+" }}}
 
-" Underlining tool
+" Underlining tool  {{{
 function! s:Underline(chars)
   let chars = empty(a:chars) ? '-' : a:chars
   let nb_chars = len(chars)
@@ -311,6 +319,7 @@ function! s:Underline(chars)
   endif
 endfunction
 command! -nargs=? Underline call <sid>Underline(<q-args>)
+" }}}
 
 " Strip trailing white spaces
 nmap <silent> _$ :call Preserve("%s/\\s\\+$//e")<CR>
@@ -329,7 +338,7 @@ endif
 command! -nargs=? Chmod :!chmod <q-args> "%"
 nnoremap <silent> <leader>X :Chmod +x<CR>
 
-" Soft linewrapping
+" Soft linewrapping  {{{
 "   to insert unicode characters use ctrl-vu charcode
 if has("multi_byte")
   command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
@@ -349,8 +358,9 @@ imap <A-4> <C-o>g$
 imap <A-6> <C-o>g^
 imap <A-^> <C-o>g^
 imap <A-0> <C-o>g^
+" }}}
 
-" Python virtualenv
+" Python virtualenv  {{{
 "   [http://sontek.net/turning-vim-into-a-modern-python-ide#virtualenv]
 if !empty($VIRTUAL_ENV)
 python << EOF
@@ -364,18 +374,19 @@ if 'VIRTUAL_ENV' in os.environ:
   execfile(activate_this, dict(__file__=activate_this))
 EOF
 endif
+" }}}
 
 " Use undofile
 " [refer to http://amix.dk/blog/post/19548]
 set undofile
 
 "---------------------------------------------------------------------
-" Key mappings für eigene Makros
+" Key mappings für eigene Makros                                  {{{1
 "---------------------------------------------------------------------
 
 let mapleader = ','
 
-" Underline mappings
+" Underline mappings  {{{
 nnoremap <silent> <leader>u :Underline -<CR>
 nnoremap <silent> <leader>U :Underline =<CR>
 nnoremap <silent> <leader>uu :Underline -<CR>
@@ -384,12 +395,13 @@ nnoremap <silent> <leader>uc :Underline -<CR>
       \Vk:call NERDComment(1, 'alignBoth')<CR>
 nnoremap <silent> <leader>Uc :Underline =<CR>
       \Vk:call NERDComment(1, 'alignBoth')<CR>
+" }}}
 
 " Don't use Ex mode, use Q for formatting
 " Aus vimrc_example von Bram Moolenar
 map Q gq
 
-" Show quickfix window for current search with <leader>q/
+" Show quickfix window for current search with <leader>q/  {{{
 nnoremap <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
 " Further quickfix mappings
 nnoremap <leader>qo :copen<CR>
@@ -401,41 +413,48 @@ nnoremap <leader>lo :lopen<CR>
 nnoremap <leader>lc :lclose<CR>
 nnoremap ]l :lnext<CR>
 nnoremap [l :cprevious<CR>
+" }}}
 
-" Toggle automatic formatting
+" Toggle automatic formatting  {{{
 map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
       \ set formatoptions-=a <Bar>
       \ else <Bar>
       \ set formatoptions+=a <Bar>
       \ endif<CR>
+" }}}
 
 " mappings to easily edit files, that are within the same directory as the
-" current file.
+" current file.  {{{
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 map <leader>ew :e %%
 map <leader>es :sp %%
 map <leader>ev :vsp %%
 map <leader>et :tabe %%
+" }}}
 
+" arrow key movement  {{{
 " Intuitives Springen durch Zeilen, die umgebrochen wurden.
 " Aus "Hacking Vim" von Kim Schulz
 map <DOWN> gj
 map <UP> gk
 imap <DOWN> <C-o>gj
 imap <UP> <C-o>gk
+" }}}
 
-" Single line scrolling
+" Single line scrolling  {{{
 nmap <C-PageUP> <C-Y>
 nmap <C-PageDown> <C-E>
 imap <C-PageUP> <C-o><C-Y>
 imap <C-PageDown> <C-o><C-E>
+" }}}
 
-" Text bubbling - http://vimcasts.org/episodes/bubbling-text/
+" Text bubbling - http://vimcasts.org/episodes/bubbling-text/  {{{
 " using the unimpared.vim package
 nmap <C-Up> [e
 nmap <C-Down> ]e
 vmap <C-Up> [egv
 vmap <C-Down> ]egv
+" }}}
 
 " Visually select the text that way last edited/pasted
 nmap gV `[v`]
@@ -448,7 +467,7 @@ imap <C-BS> <C-w>
 " Aus "Hacking Vim" von Kim Schulz
 map <F1> <ESC>:exec "help ".expand("<cWORD>")<CR>
 
-" Go to next and previous file
+" Go to next and previous file  {{{
 nnoremap <C-right> :next<CR>
 nnoremap <C-left> :prev<CR>
 nnoremap <C-home> :first<CR>
@@ -457,54 +476,55 @@ nnoremap <C-S-right> :bnext<CR>
 nnoremap <C-S-left> :bprev<CR>
 nnoremap <C-S-home> :bfirst<CR>
 nnoremap <C-S-end> :blast<CR>
+" }}}
 
 " toggle folds with space bar
 nnoremap <space> za
 
 "---------------------------------------------------------------------
-" Skript-spezifische Einstellungen
+" Skript-spezifische Einstellungen                                {{{1
 "---------------------------------------------------------------------
 
-" snipMate
+" snipMate  {{{2
 " --------
 let g:snips_author = 'Andreas Herrmann'
 " To redifine the trigger key, refer tp :help snipMate-remap
 " Indentation is affected by softtabstop or expandtab
 
-" surround
+" surround  {{{2
 " --------
 " Leave visual mode s mapping alone.
 xmap <leader>s <Plug>Vsurround
 
-" NERD-Commenter
+" NERD-Commenter  {{{2
 " --------------
 let NERDRemoveExtraSpaces = 1
 let NERDSpaceDelims = 1
 
-" NERD-Tree
+" NERD-Tree  {{{2
 " ---------
 map <F2> :NERDTreeToggle<CR>
 
-" Gundo
+" Gundo  {{{2
 " -----
 nnoremap <F3> :GundoToggle<CR>
 
-" TagList
+" TagList  {{{2
 " -------
 " nnoremap <F4> :TlistToggle<CR>
 
-" TagBar
+" TagBar  {{{2
 " ------
 "  Show tagbar on the left side. Expand gvim window when doing so.
 let g:tagbar_left = 1
 let g:tagbar_expand = 1
 nnoremap <F4> :TagbarToggle<CR>
 
-" Alternate
+" Alternate  {{{2
 " ---------
 map <leader>a :A<CR>
 
-" Tabular
+" Tabular  {{{2
 " -------
 " short-keys [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
 nmap <Leader>t= :Tabularize /=<CR>
@@ -530,7 +550,7 @@ function! s:align()
   endif
 endfunction
 
-" Latex-Suite
+" Latex-Suite  {{{2
 " -----------
 let g:Tex_DefaultTargetFormat='pdf'
 if executable('evince')
@@ -540,13 +560,13 @@ let g:Tex_UseMakefile=1
 
 set grepprg=grep\ -nH\ $*\ /dev/null
 
-" Gist
+" Gist  {{{2
 " ----
 let g:gist_clip_command = 'xclip -selection clipboard'
 let g:gist_detect_filetype = 1
 let g:gist_open_browser_after_post = 1
 
-" Syntastic
+" Syntastic  {{{2
 " ---------
 let g:syntastic_enable_signs = 1
 " let g:syntastic_auto_jump = 1
@@ -555,7 +575,7 @@ let g:syntastic_auto_loc_list = 2
 let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
 let g:syntastic_disabled_filetypes = ['c', 'cpp', 'tex']
 
-" Clang-Complete
+" Clang-Complete  {{{2
 " --------------
 " unfortunately too slow
 let g:clang_complete_auto = 0
@@ -564,11 +584,11 @@ if filereadable($HOME.'/usr/lib/libclang.so')
   let g:clang_library_path = $HOME.'/usr/lib'
 endif
 
-" Task-List
+" Task-List  {{{2
 " ---------
 map <leader>d <Plug>TaskList
 
-" Fuzzy-Finder
+" Fuzzy-Finder  {{{2
 " ------------
 let g:fuf_modesDisable = []
 let g:fuf_mrufile_maxItem = 400
@@ -614,11 +634,11 @@ nnoremap <silent> <leader>sh     :FufHelp<CR>
 nnoremap <silent> <leader>se     :FufEditDataFile<CR>
 nnoremap <silent> <leader>sr     :FufRenewCache<CR>
 
-" Pep-8
+" Pep-8  {{{2
 " -----
 let g:pep8_map = '<leader>8'
 
-" Fugitive
+" Fugitive  {{{2
 " --------
 if has("autocmd")
   augroup Fugitive
@@ -631,12 +651,12 @@ if has("autocmd")
   augroup END
 endif
 
-" Shell
+" Shell  {{{2
 " -----
 let g:shell_mappings_enable = 0
 nmap <silent> go :Open<CR>
 
-" Rainbow Parenthesis
+" Rainbow Parenthesis  {{{2
 " -------------------
 nmap <silent> <leader>rb<space> :RainbowParenthesesToggle<CR>
 nmap <silent> <leader>rb( :RainbowParenthesesLoadRound<CR>
@@ -645,6 +665,6 @@ nmap <silent> <leader>rb{ :RainbowParenthesesLoadBraces<CR>
 nmap <silent> <leader>rb< :RainbowParenthesesLoadChevrons<CR>
 
 "---------------------------------------------------------------------
-" Spielplatz
+" Spielplatz                                                      {{{1
 "---------------------------------------------------------------------
 

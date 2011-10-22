@@ -384,6 +384,38 @@ endif
 " [refer to http://amix.dk/blog/post/19548]
 set undofile
 
+" cscope setup  {{{
+" [refer to http://vim.wikia.com/wiki/Cscope]
+if has('cscope')
+  set cscopetag cscopeverbose
+
+  if has('quickfix')
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+  endif
+
+  " TODO: default to `cscope.out'
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+  cnoreabbrev cmk make cscope
+  
+  " Add the following to your Makefile:
+  "     # Build the cscope database.
+  "     # This may search more files than necessary.
+  "     .PHONY: cscope csclean
+  "     csclean:
+  "             -rm -vf cscope.out
+  "     cscope.out:
+  "             cscope -bv ./*.[ch] ./*.cpp ./*.cc
+  "     cscope: csclean cscope.out  ;
+
+  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+endif
+" }}}
+
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros                                  {{{1
 "---------------------------------------------------------------------

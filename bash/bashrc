@@ -57,7 +57,9 @@ fi
 #   Install `ncurses-term' package on Ubuntu for 256 colour terminfo
 #   definitions.
 case "$COLORTERM" in
-  gnome*-*terminal) export TERM="xterm-256color"
+  gnome*-*terminal) export TERM="xterm-256color" ;;
+  Konsole) export TERM="xterm-256color" ;;
+  1) color_prompt=yes;;
 esac
 
 # set a fancy prompt (non-color, unless we know we "want" color)

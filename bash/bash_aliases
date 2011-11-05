@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# config aliases
+alias dotfiles="pushd \"$DOTFILES\""
+alias bashrc="pushd \"$BASH_HOME\" ; edit bashrc ; popd"
+alias sbashrc="source ~/.bashrc"
+
 # ls aliases
 alias ll='ls -alF'
 alias la='ls -A'

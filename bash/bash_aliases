@@ -30,6 +30,10 @@ alias matlab="matlab -nosplash"
 alias fluidsynth-font="fluidsynth /usr/share/sounds/sf2/CT4MGM.SF2"
 alias qmv="qmv -f destination-only"
 
+# preferred applications (xdg)
+alias xo="xdg-open"
+alias xmail="xdg-email"
+
 # patches
 alias mkpatch="diff -Naur"
 

@@ -37,6 +37,10 @@ set rtp+=$HOME/.vim/vundles/vundle
 call vundle#rc($HOME . '/.vim/vundles')
 Bundle 'gmarik/vundle'
 
+" Add system runtimepath
+" ----------------------
+set rtp+=/usr/share/vim/current/vimfiles
+
 " Map leader
 " ----------
 let mapleader = ','

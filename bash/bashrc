@@ -53,6 +53,11 @@ if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
 
+# Select favourite editor
+case "$TERM" in xterm*) export VISUAL="gvim -f" ;; esac
+export EDITOR=vim
+alias editor=vim
+
 # Add 256-color support for gnome-terminal
 #   Install `ncurses-term' package on Ubuntu for 256 colour terminfo
 #   definitions.

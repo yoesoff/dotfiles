@@ -707,6 +707,10 @@ let g:pad_custom_mappings = 1
 nmap <leader>PL :ListPads<CR>
 nmap <leader>PN :OpenPad<CR>
 
+" Vim Notes  {{{2
+" ---------
+let g:notes_directory = '~/.dotfiles/vim/notes'
+
 "---------------------------------------------------------------------
 " Spielplatz                                                      {{{1
 "---------------------------------------------------------------------

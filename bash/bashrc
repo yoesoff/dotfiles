@@ -6,6 +6,7 @@
 PATH="${HOME}/usr/bin:${HOME}/usr/games:${PATH}"
 export MAIL="/var/spool/mail/${USER}"
 PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
+MANPATH="${MANPATH}:/usr/local/share/man:${HOME}/usr/man"
 
 DOTFILES="${HOME}/.dotfiles"
 BASH_HOME="${DOTFILES}/bash"

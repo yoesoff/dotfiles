@@ -60,6 +60,7 @@ Bundle 'TaskList.vim.git'
 Bundle 'Vimball.git'
 Bundle 'altercation/vim-colors-solarized.git'
 Bundle 'ehamberg/vim-cute-python'
+Bundle 'vim-pad'
 Bundle 'fs111/pydoc.vim.git'
 Bundle 'godlygeek/csapprox.git'
 Bundle 'godlygeek/tabular.git'
@@ -698,6 +699,13 @@ nmap <silent> <leader>rb( :RainbowParenthesesLoadRound<CR>
 nmap <silent> <leader>rb[ :RainbowParenthesesLoadSquare<CR>
 nmap <silent> <leader>rb{ :RainbowParenthesesLoadBraces<CR>
 nmap <silent> <leader>rb< :RainbowParenthesesLoadChevrons<CR>
+
+" Vim Pad  {{{2
+" -------
+let g:pad_dir = '~/.dotfiles/vim/pad'
+let g:pad_custom_mappings = 1
+nmap <leader>PL :ListPads<CR>
+nmap <leader>PN :OpenPad<CR>
 
 "---------------------------------------------------------------------
 " Spielplatz                                                      {{{1

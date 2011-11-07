@@ -3,3 +3,4 @@
 *.pyc
 private
 local
+vim/pad

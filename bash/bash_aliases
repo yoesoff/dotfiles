@@ -50,3 +50,6 @@ alias g++o3="g++ -O3 -DNDEBUG"
 
 # SyncEvolution
 alias syncev="syncevolution funambol"
+
+# Weird fun stuff
+alias slowcat="pv -qL 10"

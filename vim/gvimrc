@@ -55,7 +55,7 @@ endif
 
 " Schriftart setzen - evtl. in filetype plugins per autocmd auslagern
 "set guifont=Monospace\ 8
-set guifont=Inconsolata\ 10
+set guifont=Inconsolata\ 11
 
 " Toolbar standardmäßig deaktivieren
 set guioptions-=T

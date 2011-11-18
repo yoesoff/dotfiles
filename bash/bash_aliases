@@ -32,6 +32,11 @@ alias zins="sudo zypper install"
 alias zup="sudo zypper update"
 alias zref="sudo zypper refresh"
 
+# git
+alias gi="git"
+alias gk="gitk"
+alias gg="gitg"
+
 # vim
 alias g="gvim --remote-silent"
 

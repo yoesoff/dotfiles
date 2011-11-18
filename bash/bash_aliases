@@ -21,6 +21,17 @@ alias ainstall="aptitude install"
 alias dpkgl="dpkg -L"
 alias dpkgs="dpkg -S"
 
+# openSUSE packages
+alias z="zypper"
+alias zysh="zypper shell"
+alias zf="zypper search"
+alias zi="zypper info"
+alias suz="sudo zypper"
+alias suzysh="sudo zypper shell"
+alias zins="sudo zypper install"
+alias zup="sudo zypper update"
+alias zref="sudo zypper refresh"
+
 # vim
 alias g="gvim --remote-silent"
 

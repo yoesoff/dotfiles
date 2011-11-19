@@ -54,8 +54,8 @@ if version >= 500
 endif
 
 " Schriftart setzen - evtl. in filetype plugins per autocmd auslagern
-"set guifont=Monospace\ 8
-set guifont=Inconsolata\ 11
+set guifont=Droid\ Sans\ Mono\ Slashed\ 10,
+      \Inconsolata\ 12,DejaVu\ Sans\ Mono\ 10,Monospace\ 10
 
 " Toolbar standardmäßig deaktivieren
 set guioptions-=T

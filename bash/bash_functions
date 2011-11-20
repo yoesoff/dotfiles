@@ -39,6 +39,41 @@ wiki()
   dig +short txt "$*".wp.dg.cx | perl -pe's/\\(\d{1,3})/chr $1/eg' | fmt
 }
 
+# Currency conversion via google finance
+curr()
+{
+  local url="http://www.google.com/finance/converter"
+
+  if [[ $# == 0 ]]; then
+    echo "Currency conversion using google finance" >&2
+    echo "Usage: curr amount from to [to ...]" >&2
+    echo -e "\nSupported currencies:" >&2
+    wget -qO- "${url}" \
+      | iconv -f ISO-8859-1 \
+      | sed -e '0,/\<select\s*name=to/d;/select/,$d' \
+      -e 's/.*value="\([^"]*\)">\([^<]*\).*/\1\ :\ \2/' >&2
+  elif [[ $# == 3 ]]; then
+    local amount="$1"
+    local from="$2"
+    local to="$3"
+    wget -qO- \
+      "${url}?a=${amount}&from=${from}&to=${to}&hl=es" \
+      |  sed '/res/!d;s/<[^>]*>//g;'
+    wget -qO- \
+      "${url}?a=${amount}&from=${to}&to=${from}&hl=es" \
+      |  sed '/res/!d;s/<[^>]*>//g;'
+  else
+    local amount="$1"
+    local from="$2"
+    shift 2
+    for to in "$@"; do
+      wget -qO- \
+	"${url}?a=${amount}&from=${from}&to=${to}&hl=es" \
+	|  sed '/res/!d;s/<[^>]*>//g;'
+    done
+  fi
+}
+
 # Silly coffee pot
 coffee()
 {

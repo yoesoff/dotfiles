@@ -104,9 +104,8 @@ endif
 " Keine Kompatibilität mit Vi! Viele Scripts setzen das voraus.
 set nocompatible
 
-" allow backspacing over everything in insert mode
-" Aus vimrc_example von Bram Moolenar
-set backspace=indent,eol,start
+" Lilypond config file
+set runtimepath+=/usr/share/lilypond/2.10.33/vim/
 
 " Aus vimrc_example von Bram Moolenar
 if has("vms")
@@ -118,6 +117,14 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
+
+" Use undofile
+" [refer to http://amix.dk/blog/post/19548]
+set undofile
+
+" allow backspacing over everything in insert mode
+" Aus vimrc_example von Bram Moolenar
+set backspace=indent,eol,start
 
 " In many terminal emulators the mouse works just fine, thus enable it.
 " Aus vimrc_example von Bram Moolenar
@@ -135,12 +142,48 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
+" Nice characters in listing mode
+"   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
+"                   ⍽ 9085(x237D), ␣ 9251(x2423)
+if has("multi_byte")
+  set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
+endif
+
+" Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
+" sollte in ftplugins gesetzt werden.
+set spelllang=de,en
+
+" Ermöglicht es nichtgespeicherte Puffer zu verstecken, wenn ein Kommando wie
+" :edit {file} den aktuellen Puffer braucht.
+set hidden
+
+" Cooleres Tab-Menü
+set wildmenu
+
 " Searching test will find test, Test, tEst, etc.
 " while search Test will find Test.
 set ignorecase smartcase
 
-" Lilypond config file
-set runtimepath+=/usr/share/lilypond/2.10.33/vim/
+" Tab settings  {{{
+" Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
+" Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
+" durch ftplugins beeinflusst sein.
+setlocal sw=2
+" softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
+setlocal softtabstop=4
+" Tabulator am Zeilenanfang auf sw setzen.
+set smarttab
+" always set autoindenting on
+set autoindent
+" }}}
+
+" Formatting options  {{{
+" Default textwidth
+set textwidth=78
+" Default format options  [refer to fo-table]
+"   autowrap text+comments, auto comment, allow `gq', numbered lists
+set formatoptions=tcroqn
+" }}}
 
 " Only do this part when compiled with support for autocommands.
 " Aus vimrc_example von Bram Moolenar
@@ -157,7 +200,7 @@ if has("autocmd")  " {{{
   au!
 
   " filetype settings
-  autocmd FileType text setlocal autoindent
+  autocmd FileType text,txt setlocal autoindent
   autocmd FileType gitconfig setlocal sw=8 noexpandtab
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
@@ -172,8 +215,8 @@ if has("autocmd")  " {{{
   " formatoptions
   autocmd FileType c,cpp,sh,python,make setlocal formatoptions=croqn
   autocmd FileType tex setlocal formatoptions=tcroqlwn
-  autocmd FileType text setlocal formatoptions=tcroqn
-  autocmd FileType text,c,cpp,tex,sh,python setlocal textwidth=78
+  autocmd FileType text,txt setlocal formatoptions=tcroqn
+  autocmd FileType text,txt,c,cpp,tex,sh,python setlocal textwidth=78
   " to use an external format program use
   "   :set formatprg=par
   "   :set formatprg=par\ -w78
@@ -201,11 +244,28 @@ if has("autocmd")  " {{{
 
   augroup END
 
-else
-
-  set autoindent		" always set autoindenting on
-
 endif " has("autocmd") }}}
+
+" Eigene allgemeine Abkürzungen einbinden
+" Aus "Hacking Vim" von Kim Schulz
+source $HOME/.vim/abbreviations.vim
+
+" Status line  {{{
+" Informative Statuszeile, die immer sichtbar ist
+" Aus "Hacking Vim" von Kim Schulz
+" Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
+" geklaut aus der VIM-Wiki:
+" http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
+set statusline=%<
+      \%{(exists('*SyntasticStatuslineFlag')?SyntasticStatuslineFlag():\"\")}
+      \%f%h%m%r
+      \%{(exists('*fugitive#statusline')?fugitive#statusline():\"\")}
+      \\ [%{&ff}]%{\"
+      \[\".(&fenc==\"\"?&enc:&fenc).
+      \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
+      \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
+set laststatus=2
+" }}}
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -226,52 +286,6 @@ if !has('gui_running')
 endif
 " }}}
 
-" Status line  {{{
-" Informative Statuszeile, die immer sichtbar ist
-" Aus "Hacking Vim" von Kim Schulz
-" Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
-" geklaut aus der VIM-Wiki:
-" http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
-set statusline=%<
-      \%{(exists('*SyntasticStatuslineFlag')?SyntasticStatuslineFlag():\"\")}
-      \%f%h%m%r
-      \%{(exists('*fugitive#statusline')?fugitive#statusline():\"\")}
-      \\ [%{&ff}]%{\"
-      \[\".(&fenc==\"\"?&enc:&fenc).
-      \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
-      \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
-set laststatus=2
-" }}}
-
-" Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
-" sollte in ftplugins gesetzt werden.
-set spelllang=de,en
-
-" Eigene allgemeine Abkürzungen einbinden
-" Aus "Hacking Vim" von Kim Schulz
-source $HOME/.vim/abbreviations.vim
-
-" Ermöglicht es nichtgespeicherte Puffer zu verstecken, wenn ein Kommando wie
-" :edit {file} den aktuellen Puffer braucht.
-set hidden
-
-" Cooleres Tab-Menü
-set wildmenu
-
-" Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
-" Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
-" durch ftplugins beeinflusst sein.
-setlocal sw=2
-" softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
-setlocal softtabstop=4
-
-" Tabulator am Zeilenanfang auf sw setzen.
-set smarttab
-
-" cd into the directory the current buffer is in.
-com! CD cd %:p:h
-com! LCD lcd %:p:h
-
 " Quick editing and automatic sourcing of vimrc file.  {{{
 if has("autocmd")
   " :autocmd! config to disable automatic sourcing
@@ -288,6 +302,10 @@ com! Egvimrs tabedit $MYGVIMRC
 com! Sorc source $MYVIMRC | 
       \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
 " }}}
+
+" cd into the directory the current buffer is in.
+com! CD cd %:p:h
+com! LCD lcd %:p:h
 
 " Preserve cursor position  {{{
 " A function, that preserves the cursor position while executing a command.
@@ -337,13 +355,6 @@ nmap <silent> _$ :call Preserve("%s/\\s\\+$//e")<CR>
 " Align whole file
 nmap <silent> _= :call Preserve("normal gg=G")<CR>
 
-" Nice characters in listing mode
-"   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
-"                   ⍽ 9085(x237D), ␣ 9251(x2423)
-if has("multi_byte")
-  set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
-endif
-
 " chmod of current file
 command! -nargs=? Chmod :!chmod <q-args> "%"
 nnoremap <silent> <leader>X :Chmod +x<CR>
@@ -385,10 +396,6 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 endif
 " }}}
-
-" Use undofile
-" [refer to http://amix.dk/blog/post/19548]
-set undofile
 
 " cscope setup  {{{
 " [refer to http://vim.wikia.com/wiki/Cscope]

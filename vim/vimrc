@@ -26,9 +26,8 @@
 
 " Pathogen
 " --------
-" These lines have to be called before enabling filetype detection.
-call pathogen#runtime_append_all_bundles()
-call pathogen#helptags()
+" Used for the few plugins, that still aren't managed by vundle.
+call pathogen#infect()
 
 " Vundle
 " ------

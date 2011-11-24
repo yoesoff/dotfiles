@@ -52,7 +52,7 @@ alias fluidsynth-font="fluidsynth /usr/share/sounds/sf2/CT4MGM.SF2"
 alias qmv="qmv -f destination-only"
 
 # preferred applications (xdg)
-alias xo="xdg-open"
+xo() { for f in "$@"; do xdg-open "$f" & done }
 alias xmail="xdg-email"
 
 # patches

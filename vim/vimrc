@@ -157,6 +157,10 @@ set spelllang=de,en
 " :edit {file} den aktuellen Puffer braucht.
 set hidden
 
+" When jumping to another buffer, jump to the first open window, that contains
+" that buffer. If there is none, open the buffer in the current window.
+set switchbuf=useopen
+
 " Cooleres Tab-Menü
 set wildmenu
 

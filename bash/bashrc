@@ -4,7 +4,7 @@
 
 # Environment
 PREFIX="${HOME}/usr"
-PATH="${PREFIX}/bin:${PREFIX}/games:${PATH}:${PREFIX}/lib/ruby/gems/1.8/bin"
+PATH="/sbin:${PREFIX}/bin:${PREFIX}/games:${PATH}:${PREFIX}/lib/ruby/gems/1.8/bin"
 export MAIL="/var/spool/mail/${USER}"
 PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
 export GEM_HOME="${PREFIX}/lib/ruby/gems/1.8"

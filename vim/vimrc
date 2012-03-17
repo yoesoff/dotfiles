@@ -49,6 +49,7 @@ let mapleader = ','
 " VUNDLES                                                        {{{1
 " -------------------------------------------------------------------
 Bundle 'bufkill.vim'
+Bundle 'MarcWeber/vim-addon-local-vimrc'
 Bundle 'Conque-Shell'
 Bundle 'FuzzyFinder'
 Bundle 'Indent-Guides'

@@ -66,7 +66,9 @@ set guioptions-=r
 
 " Farbschema für GVim setzen
 " Eine andere gute Alternative zu sienna ist biogoo
-colorscheme zenburn
+set background=light
+let g:solarized_visibility="low"
+colorscheme solarized
 
 " gnome-terminal zur Anzeige von man-pages
 set keywordprg=gnome-terminal\ -e\ man\\

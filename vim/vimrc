@@ -289,6 +289,10 @@ if !has('gui_running')
 endif
 " }}}
 
+" color column
+" Highlight column to emphasize textwidth
+set colorcolumn=+1
+
 " Quick editing and automatic sourcing of vimrc file.  {{{
 if has("autocmd")
   " :autocmd! config to disable automatic sourcing

@@ -41,7 +41,7 @@ alias gg="gitg"
 alias g="gvim --remote-silent"
 
 # rlwrap aliases
-if which rlwrap &>/dev/null ; then
+if which rlwrap &>/dev/null && which pacmd &>/dev/null ; then
   alias pacmd="rlwrap -b '(){}[],+=&^%\$#@\"\";|\' $(which pacmd)"
 fi
 

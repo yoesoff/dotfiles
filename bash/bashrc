@@ -9,7 +9,7 @@ export MAIL="/var/spool/mail/${USER}"
 PYTHONPATH=.:/usr/local/lib/:/usr/local/lib/python2.6/site-packages:/usr/local/lib/python2.6/dist-packages/
 export GEM_HOME="${PREFIX}/lib/ruby/gems/1.8"
 export RUBYLIB="${PREFIX}/lib/ruby:${PREFIX}/lib/ruby_site/1.8"
-MANPATH="${MANPATH}:/usr/local/share/man:${PREFIX}/man"
+MANPATH="${MANPATH}:/usr/local/share/man:${PREFIX}/man:${PREFIX}/share/man"
 
 DOTFILES="${HOME}/.dotfiles"
 BASH_HOME="${DOTFILES}/bash"

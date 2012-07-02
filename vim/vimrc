@@ -88,6 +88,7 @@ Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'xolox/vim-notes'
 Bundle 'yurifury/hexHighlight'
+Bundle 'Shougo/neocomplcache'
 "---------------------------------------------------------------------
 
 "---------------------------------------------------------------------
@@ -730,6 +731,12 @@ nmap <leader>PN :OpenPad<CR>
 " Vim Notes  {{{2
 " ---------
 let g:notes_directory = '~/.dotfiles/vim/notes'
+" NeoComplCache  {{{2
+" -------------
+let g:neocomplcache_enable_at_startup = 1
+let g:neocomplcache_enable_camel_case_completion = 1
+let g:neocomplcache_enable_underbar_completion = 1
+" let g:neocomplcache_enable_fuzzy_completion = 1
 
 "---------------------------------------------------------------------
 " Spielplatz                                                      {{{1

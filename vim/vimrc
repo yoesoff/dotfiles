@@ -177,6 +177,8 @@ set sw=2
 set softtabstop=4
 " Tabulator am Zeilenanfang auf sw setzen.
 set smarttab
+" tab in Leerzeichen umwandeln
+set expandtab
 " always set autoindenting on
 set autoindent
 " }}}
@@ -205,7 +207,7 @@ if has("autocmd")  " {{{
 
   " filetype settings
   autocmd FileType text,txt setlocal autoindent
-  autocmd FileType gitconfig setlocal sw=8 noexpandtab
+  autocmd FileType gitconfig,make setlocal sw=8 noexpandtab
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
   autocmd FileType vim setlocal foldmethod=marker

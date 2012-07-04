@@ -438,7 +438,7 @@ if has('cscope')
   "             cscope -bv ./*.[ch] ./*.cpp ./*.cc
   "     cscope: csclean cscope.out  ;
 
-  command -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+  command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
 endif
 " }}}
 

@@ -265,20 +265,21 @@ set virtualedit+=block
 
 " Python virtualenv 
 " ------------------
+" !!! Should be taken care of by python-mode
 " Be aware of a python virtualenv.
 "   [http://sontek.net/turning-vim-into-a-modern-python-ide#virtualenv]
-if !empty($VIRTUAL_ENV)
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  sys.path.insert(0, project_base_dir)
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
+" if !empty($VIRTUAL_ENV)
+" python << EOF
+" import os.path
+" import sys
+" import vim
+" if 'VIRTUAL_ENV' in os.environ:
+"   project_base_dir = os.environ['VIRTUAL_ENV']
+"   sys.path.insert(0, project_base_dir)
+"   activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+"   execfile(activate_this, dict(__file__=activate_this))
+" EOF
+" endif
 
 " cscope setup
 " ------------
@@ -362,6 +363,8 @@ Bundle 'L9'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 " Not sure what that is for.
 " Bundle 'tomtom/tlib_vim'
+" Allow `.` repeat for many operations.
+Bundle 'tpope/vim-repeat'
 
 " Shell
 " -----
@@ -398,19 +401,56 @@ Bundle 'MarcWeber/vim-addon-local-vimrc'
 
 " Python plugins
 " --------------
-" Check python for pep8 compatibility.
-Bundle 'pep8'
-let g:pep8_map = '<leader>8'
 " %-matching for if/then/else etc. in python.
-Bundle 'python_match.vim'
+" Bundle 'python_match.vim'
 " displays cute unicode characters instead of lambda/sum/in/not/etc.
 " Bundle 'ehamberg/vim-cute-python'
-" Browse python documentation within vim.
-Bundle 'fs111/pydoc.vim'
-" Refactoring plugin
-Bundle 'sontek/rope-vim'
-" Allow `.` repeat for many operations.
-Bundle 'tpope/vim-repeat'
+Bundle 'klen/python-mode'
+" Python-mode
+" refer to [http://unlogic.co.uk/posts/vim-python-ide.html]
+" Activate rope
+" Keys:
+" K             Show python docs
+" <Ctrl-Space>  Rope autocomplete
+" <Ctrl-c>g     Rope goto definition
+" <Ctrl-c>d     Rope show documentation
+" <Ctrl-c>f     Rope find occurrences
+" <Leader>b     Set, unset breakpoint (g:pymode_breakpoint enabled)
+" [[            Jump on previous class or function
+"               (normal, visual, operator modes)
+" ]]            Jump on next class or function
+"               (normal, visual, operator modes)
+" [M            Jump on previous class or method
+"               (normal, visual, operator modes)
+" ]M            Jump on next class or method
+"               (normal, visual, operator modes)
+let g:pymode_rope = 1
+
+" Documentation
+let g:pymode_doc = 1
+let g:pymode_doc_key = 'K'
+
+"Linting
+let g:pymode_lint = 1
+let g:pymode_lint_checker = "pyflakes,pep8"
+" Auto check on save
+let g:pymode_lint_write = 1
+
+" Support virtualenv
+let g:pymode_virtualenv = 1
+
+" Enable breakpoints plugin
+let g:pymode_breakpoint = 1
+let g:pymode_breakpoint_key = '<leader>b'
+
+" syntax highlighting
+let g:pymode_syntax = 1
+let g:pymode_syntax_all = 1
+let g:pymode_syntax_indent_errors = g:pymode_syntax_all
+let g:pymode_syntax_space_errors = g:pymode_syntax_all
+
+" Don't autofold code
+" let g:pymode_folding = 0
 
 " Comment plugin
 " --------------

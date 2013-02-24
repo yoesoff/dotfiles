@@ -1,103 +1,179 @@
-"--------------------------------------------------------------------
-" GVim Einstellungsdatei
-"--------------------------------------------------------------------
-" Diese Datei sollte alle Einstellungen enthalten, die GVim im
-" Speziellen betreffen.
+" ######################################################################
+"  VIM Graphical Settings
+" ######################################################################
+
+" ======================================================================
+"  Introduction
+" ======================================================================
+
+" Graphical configuration file for Vi-Improved.
 "
-" Alle Einstellungen sind grob in vier Bereiche eingeteilt:
-" - Generelle Einstellungen
-" - Key mappings für eigene Makros
-" - Skript-spezifische Einstellungen
-" - Spielplatz (Testweise eingebaute Einstellungen, Makros und
-"   Snippets. Einstellungen, die wirklich nur kurz ausprobiert
-"   werden sollen, sollten zunächst in einer seperaten Datei stehen
-"   und per source eingebunden werden.)
-"
-" Sollten einige dieser Einstellungsbereiche zu groß werden, oder zu
-" einem bestimmten Skript zu viele Einstellungen nötig sein, lohnt es
-" sich diese in eine eigene Datei zu exportieren und in dieser Datei
-" per source einzubinden.
-" Alle Einstellungen sollte sorgfältig und am besten mit Zweck,
-" Quelle, Autor kommentiert werden!
-"
-" Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
-" "Appendix B".
+" The setup sections should try to adhere to the order defined by the
+" `:options` command. I.e.:
+"      1 important
+"      2 moving around, searching and patterns
+"      3 tags
+"      4 displaying text
+"      5 syntax, highlighting and spelling
+"      6 multiple windows
+"      7 multiple tab pages
+"      8 terminal
+"      9 using the mouse
+"     10 GUI
+"     11 printing
+"     12 messages and info
+"     13 selecting text
+"     14 editing text
+"     15 tabs and indenting
+"     16 folding
+"     17 diff mode
+"     18 mapping
+"     19 reading and writing files
+"     20 the swap file
+"     21 command line editing
+"     22 executing external commands
+"     23 running make and jumping to errors
+"     24 language specific
+"     25 multi-byte characters
+"     26 various
 
-"---------------------------------------------------------------------
-" Generelle Einstellungen
-"---------------------------------------------------------------------
 
-" Aus gvimrc_example von Bram Moolenar
-set mousehide		" Hide the mouse when typing text
+" ======================================================================
+"  Settings
+" ======================================================================
 
-" Make shift-insert work like in Xterm
-" Aus gvimrc_example von Bram Moolenar
-map <S-Insert> <MiddleMouse>
-map! <S-Insert> <MiddleMouse>
+" ----------------------------------------------------------------------
+" important
+" ----------------------------------------------------------------------
 
-" Only do this for Vim version 5.0 and later.
-" Aus gvimrc_example von Bram Moolenar
-if version >= 500
+" ----------------------------------------------------------------------
+" moving around, searching and patterns
+" ----------------------------------------------------------------------
 
-  " I like highlighting strings inside C comments
-  let c_comment_strings=1
+" ----------------------------------------------------------------------
+" tags
+" ----------------------------------------------------------------------
 
-  " Switch on syntax highlighting if it wasn't on yet.
-  if !exists("syntax_on")
-    syntax on
-  endif
+" ----------------------------------------------------------------------
+" displaying text
+" ----------------------------------------------------------------------
 
-  " Switch on search pattern highlighting.
-  " Aus gvimrc_example von Bram Moolenar
-  set hlsearch
-
-endif
-
-" Schriftart setzen - evtl. in filetype plugins per autocmd auslagern
-set guifont=Droid\ Sans\ Mono\ Slashed\ 10,
-      \Inconsolata\ 12,DejaVu\ Sans\ Mono\ 10,Monospace\ 10
-
-" Toolbar standardmäßig deaktivieren
-set guioptions-=T
-" Menubar standardmäßig deaktivieren
-set guioptions-=m
-" Scrollbar standardmäßig deaktivieren
-set guioptions-=r
-
-" Farbschema für GVim setzen
-" Eine andere gute Alternative zu sienna ist biogoo
+" ----------------------------------------------------------------------
+" syntax, highlighting and spelling
+" ----------------------------------------------------------------------
 set background=light
 let g:solarized_visibility="low"
 colorscheme solarized
 
-" gnome-terminal zur Anzeige von man-pages
-set keywordprg=gnome-terminal\ -e\ man\\
+" ----------------------------------------------------------------------
+" multiple windows
+" ----------------------------------------------------------------------
 
-"---------------------------------------------------------------------
-" Key mappings für eigene Makros
-"---------------------------------------------------------------------
+" ----------------------------------------------------------------------
+" multiple tab pages
+" ----------------------------------------------------------------------
 
-" Mit F11 die Menubar an- und ausschalten
-" Falls das nicht funktioniert muss evtl.
-" ~/.gnome2/Vim gelöscht werden.
+" ----------------------------------------------------------------------
+" terminal
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" using the mouse
+" ----------------------------------------------------------------------
+" Hide the mouse when typing text
+set mousehide
+
+" ----------------------------------------------------------------------
+" GUI
+" ----------------------------------------------------------------------
+set guifont=Droid\ Sans\ Mono\ Slashed\ 10,
+      \Inconsolata\ 12,DejaVu\ Sans\ Mono\ 10,Monospace\ 10
+" Don't show tool-bar
+set guioptions-=T
+" Don't show menu-bar
+set guioptions-=m
+" Don't show scroll-bar
+set guioptions-=r
+" Toggle menu-bar
+" If it doesn't work, you might need to delete ~/.gnome2/Vim
 map <silent> <F11> :if &guioptions =~# 'm' <Bar>
 			\set guioptions-=m <Bar>
 			\else <Bar>
 			\set guioptions+=m <Bar>
 			\endif<CR>
-" Mit Ctrl-F11 die Toolbar an- und ausschalten
-" Aus "Hacking Vim" von Kim Schulz
+" Toggle tool-bar
 map <silent> <C-F11> :if &guioptions =~# 'T' <Bar>
 			\set guioptions-=T <Bar>
 			\else <Bar>
 			\set guioptions+=T <Bar>
 			\endif<CR>
 
-"---------------------------------------------------------------------
-" Skript-spezifische Einstellungen
-"---------------------------------------------------------------------
+" ----------------------------------------------------------------------
+" printing
+" ----------------------------------------------------------------------
 
-"---------------------------------------------------------------------
-" Spielplatz
-"---------------------------------------------------------------------
+" ----------------------------------------------------------------------
+" messages and info
+" ----------------------------------------------------------------------
 
+" ----------------------------------------------------------------------
+" selecting text
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" editing text
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" tabs and indenting
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" folding
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" diff mode
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" mapping
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" reading and writing files
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" the swap file
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" command line editing
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" executing external commands
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" running make and jumping to errors
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" language specific
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" multi-byte characters
+" ----------------------------------------------------------------------
+
+" ----------------------------------------------------------------------
+" various
+" ----------------------------------------------------------------------
+
+" Use default terminal to show man-pages.
+set keywordprg=xdg-terminal\ man\\
+
+
+" ######################################################################

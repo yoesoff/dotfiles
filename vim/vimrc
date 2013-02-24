@@ -303,6 +303,21 @@ endif
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
+" Alternate
+" ---------
+map <leader>a :A<CR>
+
+" LaTeX-Suite
+" -----------
+let g:Tex_DefaultTargetFormat='pdf'
+if executable('evince')
+  let g:Tex_ViewRule_pdf='evince'
+endif
+let g:Tex_UseMakefile=1
+
+" TODO: Really necessary?
+" set grepprg=grep\ -nH\ $*\ /dev/null
+
 " ----------------------------------------------------------------------
 "  Vundle setup
 " ----------------------------------------------------------------------
@@ -318,11 +333,16 @@ Bundle 'gmarik/vundle'
 " --------------------
 Bundle 'L9'
 " Asynchronous execution of shell commands. Required by easytags.vim
-Bundle 'shell.vim--Odding'
 " Required by snipmate.
 Bundle 'MarcWeber/vim-addon-mw-utils'
 " Not sure what that is for.
 " Bundle 'tomtom/tlib_vim'
+
+" Shell
+" -----
+Bundle 'shell.vim--Odding'
+let g:shell_mappings_enable = 0
+nmap <silent> go :Open<CR>
 
 " Vimball handling
 " ----------------
@@ -338,12 +358,24 @@ Bundle 'MarcWeber/vim-addon-local-vimrc'
 " Code completion
 " ---------------
 " Bundle 'Rip-Rip/clang_complete'
+" unfortunately too slow
+" let g:clang_complete_auto = 0
+" if filereadable($HOME.'/usr/lib/libclang.so')
+"   let g:clang_use_library = 1
+"   let g:clang_library_path = $HOME.'/usr/lib'
+" endif
+
 " Bundle 'Shougo/neocomplcache'
+" let g:neocomplcache_enable_at_startup = 0
+" let g:neocomplcache_enable_camel_case_completion = 1
+" let g:neocomplcache_enable_underbar_completion = 1
+" let g:neocomplcache_enable_fuzzy_completion = 1
 
 " Python plugins
 " --------------
 " Check python for pep8 compatibility.
 Bundle 'pep8'
+let g:pep8_map = '<leader>8'
 " %-matching for if/then/else etc. in python.
 Bundle 'python_match.vim'
 " displays cute unicode characters instead of lambda/sum/in/not/etc.
@@ -359,19 +391,45 @@ Bundle 'tpope/vim-repeat'
 " --------------
 " Bundle 'tpope/vim-commentary'
 Bundle 'scrooloose/nerdcommenter'
+let NERDRemoveExtraSpaces = 1
+let NERDSpaceDelims = 1
 
 " Syntax check on buffer save
 " ---------------------------
 Bundle 'scrooloose/syntastic'
+let g:syntastic_enable_signs = 1
+" let g:syntastic_auto_jump = 1
+" Either type :Errors or use <leader>lo to open the location list.
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
+let g:syntastic_mode_map = { 'mode': 'active',
+      \ 'active_filetypes': [],
+      \ 'passive_filetypes': ['c', 'cpp', 'tex'] }
 
 " Git plugins
 " -----------
 " Gitk within vim.
 " Bundle 'gregsexton/gitv'
-" Gist integration into vim.
-" Bundle 'mattn/gist-vim'
 " All-mighty git integration.
 Bundle 'tpope/vim-fugitive'
+if has("autocmd")
+  augroup Fugitive
+    au!
+    autocmd BufEnter fugitive://*
+	  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
+	  \   nnoremap <buffer> .. :edit %:h<CR> |
+	  \ endif |
+	  \ set bufhidden=delete |
+  augroup END
+endif
+
+" Gist plugin
+" -----------
+" Gist integration into vim.
+" Bundle 'mattn/gist-vim'
+" let g:gist_clip_command = 'xclip -selection clipboard'
+" let g:gist_detect_filetype = 1
+" let g:gist_open_browser_after_post = 1
 
 " Hex-color editing
 " -----------------
@@ -383,14 +441,50 @@ Bundle 'tpope/vim-fugitive'
 " Visualize indentation level.
 " Bundle 'Indent-Guides'
 " Bundle 'Justify'
-" Rainbow colors help count pairs of parenthesis.
-Bundle 'rainbow_parentheses.vim'
-" Arange text in tables.
-Bundle 'godlygeek/tabular'
-" " <C-A>/<C-X> for dates.
+" <C-A>/<C-X> for dates.
 " Bundle 'tpope/vim-speeddating'
 " Quickly edit surroundings.
 Bundle 'tpope/vim-surround'
+" Leave visual mode s mapping alone.
+xmap <leader>s <Plug>Vsurround
+
+" Rainbow parenthesis
+" -------------------
+" Rainbow colors help count pairs of parenthesis.
+Bundle 'rainbow_parentheses.vim'
+nmap <silent> <leader>rb<space> :RainbowParenthesesToggle<CR>
+nmap <silent> <leader>rb( :RainbowParenthesesLoadRound<CR>
+nmap <silent> <leader>rb[ :RainbowParenthesesLoadSquare<CR>
+nmap <silent> <leader>rb{ :RainbowParenthesesLoadBraces<CR>
+nmap <silent> <leader>rb< :RainbowParenthesesLoadChevrons<CR>
+
+" Tabularize
+" ----------
+" Arange text in tables.
+Bundle 'godlygeek/tabular'
+" short-keys [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
+nmap <Leader>t= :Tabularize /=<CR>
+vmap <Leader>t= :Tabularize /=<CR>
+" [:help \zs, :help \ze]
+nmap <Leader>t: :Tabularize /:\zs<CR>
+vmap <Leader>t: :Tabularize /:\zs<CR>
+
+" Automatical alignment
+"   [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
+"   requires that the first line of the table is already aligned.
+"   I.e. | 1 | 2 | 3 | rather than |1|2|3|.
+inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
+
+function! s:align()
+  let p = '^\s*|\s.*\s|\s*$'
+  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
+    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
+    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
+    Tabularize/|/l1
+    normal! 0
+    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
+  endif
+endfunction
 
 " Various mappings
 " ----------------
@@ -405,24 +499,75 @@ Bundle 'tpope/vim-unimpaired'
 Bundle 'garbas/vim-snipmate'
 " Snippet collection for snipmate.
 Bundle 'snipmate-snippets'
+" To redifine the trigger key, refer tp :help snipMate-remap
+" Indentation is affected by softtabstop or expandtab
+let g:snips_author = 'Andreas Herrmann'
 
 " Source code browsing
 " --------------------
-" TODO: Compare taglist and tagbar.
 " Side pane display of code tags.
 " Bundle 'taglist.vim'
+" nnoremap <F4> :TlistToggle<CR>
 " Side pane display of code tags.
-" Bundle 'majutsushi/tagbar'
+Bundle 'majutsushi/tagbar'
+"  Show tagbar on the left side. Expand gvim window when doing so.
+let g:tagbar_left = 1
+let g:tagbar_expand = 1
+nnoremap <F4> :TagbarToggle<CR>
 " list FIXME/TODO/XXX comments.
 " Bundle 'TaskList.vim'
 
 " Undo managers
 " -------------
 Bundle 'sjl/gundo.vim'
+nnoremap <F3> :GundoToggle<CR>
 
 " File managers/explorers
 " -----------------------
 " Bundle 'FuzzyFinder'
+" let g:fuf_modesDisable = []
+" let g:fuf_mrufile_maxItem = 400
+" let g:fuf_mrucmd_maxItem = 400
+" nnoremap <silent> <leader>sj     :FufBuffer<CR>
+" nnoremap <silent> <leader>sk     :FufFileWithCurrentBufferDir<CR>
+" nnoremap <silent> <leader>sK     :FufFileWithFullCwd<CR>
+" nnoremap <silent> <leader>s<C-k> :FufFile<CR>
+" nnoremap <silent> <leader>sl     :FufCoverageFileChange<CR>
+" nnoremap <silent> <leader>sL     :FufCoverageFileChange<CR>
+" nnoremap <silent> <leader>s<C-l> :FufCoverageFileRegister<CR>
+" nnoremap <silent> <leader>sd     :FufDirWithCurrentBufferDir<CR>
+" nnoremap <silent> <leader>sD     :FufDirWithFullCwd<CR>
+" nnoremap <silent> <leader>s<C-d> :FufDir<CR>
+" nnoremap <silent> <leader>sn     :FufMruFile<CR>
+" nnoremap <silent> <leader>sN     :FufMruFileInCwd<CR>
+" nnoremap <silent> <leader>sm     :FufMruCmd<CR>
+" nnoremap <silent> <leader>su     :FufBookmarkFile<CR>
+" nnoremap <silent> <leader>s<C-u> :FufBookmarkFileAdd<CR>
+" vnoremap <silent> <leader>s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
+" nnoremap <silent> <leader>si     :FufBookmarkDir<CR>
+" nnoremap <silent> <leader>s<C-i> :FufBookmarkDirAdd<CR>
+" nnoremap <silent> <leader>st     :FufTag<CR>
+" nnoremap <silent> <leader>sT     :FufTag!<CR>
+" nnoremap <silent> <leader>s<C-]> :FufTagWithCursorWord!<CR>
+" nnoremap <silent> <leader>s,     :FufBufferTag<CR>
+" nnoremap <silent> <leader>s<     :FufBufferTag!<CR>
+" vnoremap <silent> <leader>s,     :FufBufferTagWithSelectedText!<CR>
+" vnoremap <silent> <leader>s<     :FufBufferTagWithSelectedText<CR>
+" nnoremap <silent> <leader>s}     :FufBufferTagWithCursorWord!<CR>
+" nnoremap <silent> <leader>s.     :FufBufferTagAll<CR>
+" nnoremap <silent> <leader>s>     :FufBufferTagAll!<CR>
+" vnoremap <silent> <leader>s.     :FufBufferTagAllWithSelectedText!<CR>
+" vnoremap <silent> <leader>s>     :FufBufferTagAllWithSelectedText<CR>
+" nnoremap <silent> <leader>s]     :FufBufferTagAllWithCursorWord!<CR>
+" nnoremap <silent> <leader>sg     :FufTaggedFile<CR>
+" nnoremap <silent> <leader>sG     :FufTaggedFile!<CR>
+" nnoremap <silent> <leader>so     :FufJumpList<CR>
+" nnoremap <silent> <leader>sp     :FufChangeList<CR>
+" nnoremap <silent> <leader>sq     :FufQuickfix<CR>
+" nnoremap <silent> <leader>sy     :FufLine<CR>
+" nnoremap <silent> <leader>sh     :FufHelp<CR>
+" nnoremap <silent> <leader>se     :FufEditDataFile<CR>
+" nnoremap <silent> <leader>sr     :FufRenewCache<CR>
 
 " Buffer managers/explorers
 " -------------------------
@@ -430,10 +575,12 @@ Bundle 'sjl/gundo.vim'
 Bundle 'bufkill.vim'
 " File browser
 Bundle 'scrooloose/nerdtree'
+map <F2> :NERDTreeToggle<CR>
 
 " Vim as a sticky-note manager
 " ----------------------------
 Bundle 'xolox/vim-notes'
+let g:notes_directory = '~/.dotfiles/vim/notes'
 
 " Project manager
 " ---------------
@@ -816,255 +963,3 @@ endif " has("autocmd")
 
 
 " ######################################################################
-"  OLD VIM Settings
-" ######################################################################
-
-"--------------------------------------------------------------------
-" Vim Einstellungsdatei                                          {{{1
-"--------------------------------------------------------------------
-" Diese Datei sollte alle Einstellungen enthalten, die Vim im
-" Allgemeinen und im Speziellen betreffen. Einstellungen, die GVim
-" im Speziellen betreffen gehören in $HOME/.gvimrc .
-"
-" Alle Einstellungen sind grob in vier Bereiche eingeteilt:
-" - Generelle Einstellungen
-" - Key mappings für eigene Makros
-" - Skript-spezifische Einstellungen
-" - Spielplatz (Testweise eingebaute Einstellungen, Makros und
-"   Snippets. Einstellungen, die wirklich nur kurz ausprobiert
-"   werden sollen, sollten zunächst in einer seperaten Datei stehen
-"   und per source eingebunden werden.)
-"
-" Sollten einige dieser Einstellungsbereiche zu groß werden, oder zu
-" einem bestimmten Skript zu viele Einstellungen nötig sein, lohnt es
-" sich diese in eine eigene Datei zu exportieren und in dieser Datei
-" per source einzubinden.
-" Alle Einstellungen sollte sorgfältig und am besten mit Zweck,
-" Quelle, Autor kommentiert werden!
-"
-" Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
-" "Appendix B".
-
-
-"---------------------------------------------------------------------
-" Generelle Einstellungen                                         {{{1
-"---------------------------------------------------------------------
-
-
-" Eigene allgemeine Abkürzungen einbinden
-" Aus "Hacking Vim" von Kim Schulz
-source $HOME/.vim/abbreviations.vim
-
-
-"---------------------------------------------------------------------
-" Key mappings für eigene Makros                                  {{{1
-"---------------------------------------------------------------------
-
-
-
-"---------------------------------------------------------------------
-" Skript-spezifische Einstellungen                                {{{1
-"---------------------------------------------------------------------
-
-" snipMate  {{{2
-" --------
-let g:snips_author = 'Andreas Herrmann'
-" To redifine the trigger key, refer tp :help snipMate-remap
-" Indentation is affected by softtabstop or expandtab
-
-" surround  {{{2
-" --------
-" Leave visual mode s mapping alone.
-xmap <leader>s <Plug>Vsurround
-
-" NERD-Commenter  {{{2
-" --------------
-let NERDRemoveExtraSpaces = 1
-let NERDSpaceDelims = 1
-
-" NERD-Tree  {{{2
-" ---------
-map <F2> :NERDTreeToggle<CR>
-
-" Gundo  {{{2
-" -----
-nnoremap <F3> :GundoToggle<CR>
-
-" TagList  {{{2
-" -------
-" nnoremap <F4> :TlistToggle<CR>
-
-" TagBar  {{{2
-" ------
-"  Show tagbar on the left side. Expand gvim window when doing so.
-let g:tagbar_left = 1
-let g:tagbar_expand = 1
-nnoremap <F4> :TagbarToggle<CR>
-
-" Alternate  {{{2
-" ---------
-map <leader>a :A<CR>
-
-" Tabular  {{{2
-" -------
-" short-keys [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
-nmap <Leader>t= :Tabularize /=<CR>
-vmap <Leader>t= :Tabularize /=<CR>
-" [:help \zs, :help \ze]
-nmap <Leader>t: :Tabularize /:\zs<CR>
-vmap <Leader>t: :Tabularize /:\zs<CR>
-
-" Automatical alignment
-"   [http://vimcasts.org/episodes/aligning-text-with-tabular-vim/]
-"   requires that the first line of the table is already aligned.
-"   I.e. | 1 | 2 | 3 | rather than |1|2|3|.
-inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
-
-function! s:align()
-  let p = '^\s*|\s.*\s|\s*$'
-  if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)
-    let column = strlen(substitute(getline('.')[0:col('.')],'[^|]','','g'))
-    let position = strlen(matchstr(getline('.')[0:col('.')],'.*|\s*\zs.*'))
-    Tabularize/|/l1
-    normal! 0
-    call search(repeat('[^|]*|',column).'\s\{-\}'.repeat('.',position),'ce',line('.'))
-  endif
-endfunction
-
-" Latex-Suite  {{{2
-" -----------
-let g:Tex_DefaultTargetFormat='pdf'
-if executable('evince')
-  let g:Tex_ViewRule_pdf='evince'
-endif
-let g:Tex_UseMakefile=1
-
-set grepprg=grep\ -nH\ $*\ /dev/null
-
-" Gist  {{{2
-" ----
-let g:gist_clip_command = 'xclip -selection clipboard'
-let g:gist_detect_filetype = 1
-let g:gist_open_browser_after_post = 1
-
-" Syntastic  {{{2
-" ---------
-let g:syntastic_enable_signs = 1
-" let g:syntastic_auto_jump = 1
-" Either type :Errors or use <leader>lo to open the location list.
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
-let g:syntastic_mode_map = { 'mode': 'active',
-      \ 'active_filetypes': [],
-      \ 'passive_filetypes': ['c', 'cpp', 'tex'] }
-
-" Clang-Complete  {{{2
-" --------------
-" unfortunately too slow
-let g:clang_complete_auto = 0
-if filereadable($HOME.'/usr/lib/libclang.so')
-  let g:clang_use_library = 1
-  let g:clang_library_path = $HOME.'/usr/lib'
-endif
-
-" Task-List  {{{2
-" ---------
-map <leader>d <Plug>TaskList
-
-" Fuzzy-Finder  {{{2
-" ------------
-let g:fuf_modesDisable = []
-let g:fuf_mrufile_maxItem = 400
-let g:fuf_mrucmd_maxItem = 400
-nnoremap <silent> <leader>sj     :FufBuffer<CR>
-nnoremap <silent> <leader>sk     :FufFileWithCurrentBufferDir<CR>
-nnoremap <silent> <leader>sK     :FufFileWithFullCwd<CR>
-nnoremap <silent> <leader>s<C-k> :FufFile<CR>
-nnoremap <silent> <leader>sl     :FufCoverageFileChange<CR>
-nnoremap <silent> <leader>sL     :FufCoverageFileChange<CR>
-nnoremap <silent> <leader>s<C-l> :FufCoverageFileRegister<CR>
-nnoremap <silent> <leader>sd     :FufDirWithCurrentBufferDir<CR>
-nnoremap <silent> <leader>sD     :FufDirWithFullCwd<CR>
-nnoremap <silent> <leader>s<C-d> :FufDir<CR>
-nnoremap <silent> <leader>sn     :FufMruFile<CR>
-nnoremap <silent> <leader>sN     :FufMruFileInCwd<CR>
-nnoremap <silent> <leader>sm     :FufMruCmd<CR>
-nnoremap <silent> <leader>su     :FufBookmarkFile<CR>
-nnoremap <silent> <leader>s<C-u> :FufBookmarkFileAdd<CR>
-vnoremap <silent> <leader>s<C-u> :FufBookmarkFileAddAsSelectedText<CR>
-nnoremap <silent> <leader>si     :FufBookmarkDir<CR>
-nnoremap <silent> <leader>s<C-i> :FufBookmarkDirAdd<CR>
-nnoremap <silent> <leader>st     :FufTag<CR>
-nnoremap <silent> <leader>sT     :FufTag!<CR>
-nnoremap <silent> <leader>s<C-]> :FufTagWithCursorWord!<CR>
-nnoremap <silent> <leader>s,     :FufBufferTag<CR>
-nnoremap <silent> <leader>s<     :FufBufferTag!<CR>
-vnoremap <silent> <leader>s,     :FufBufferTagWithSelectedText!<CR>
-vnoremap <silent> <leader>s<     :FufBufferTagWithSelectedText<CR>
-nnoremap <silent> <leader>s}     :FufBufferTagWithCursorWord!<CR>
-nnoremap <silent> <leader>s.     :FufBufferTagAll<CR>
-nnoremap <silent> <leader>s>     :FufBufferTagAll!<CR>
-vnoremap <silent> <leader>s.     :FufBufferTagAllWithSelectedText!<CR>
-vnoremap <silent> <leader>s>     :FufBufferTagAllWithSelectedText<CR>
-nnoremap <silent> <leader>s]     :FufBufferTagAllWithCursorWord!<CR>
-nnoremap <silent> <leader>sg     :FufTaggedFile<CR>
-nnoremap <silent> <leader>sG     :FufTaggedFile!<CR>
-nnoremap <silent> <leader>so     :FufJumpList<CR>
-nnoremap <silent> <leader>sp     :FufChangeList<CR>
-nnoremap <silent> <leader>sq     :FufQuickfix<CR>
-nnoremap <silent> <leader>sy     :FufLine<CR>
-nnoremap <silent> <leader>sh     :FufHelp<CR>
-nnoremap <silent> <leader>se     :FufEditDataFile<CR>
-nnoremap <silent> <leader>sr     :FufRenewCache<CR>
-
-" Pep-8  {{{2
-" -----
-let g:pep8_map = '<leader>8'
-
-" Fugitive  {{{2
-" --------
-if has("autocmd")
-  augroup Fugitive
-    au!
-    autocmd BufEnter fugitive://*
-	  \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)' |
-	  \   nnoremap <buffer> .. :edit %:h<CR> |
-	  \ endif |
-	  \ set bufhidden=delete |
-  augroup END
-endif
-
-" Shell  {{{2
-" -----
-let g:shell_mappings_enable = 0
-nmap <silent> go :Open<CR>
-
-" Rainbow Parenthesis  {{{2
-" -------------------
-nmap <silent> <leader>rb<space> :RainbowParenthesesToggle<CR>
-nmap <silent> <leader>rb( :RainbowParenthesesLoadRound<CR>
-nmap <silent> <leader>rb[ :RainbowParenthesesLoadSquare<CR>
-nmap <silent> <leader>rb{ :RainbowParenthesesLoadBraces<CR>
-nmap <silent> <leader>rb< :RainbowParenthesesLoadChevrons<CR>
-
-" Vim Pad  {{{2
-" -------
-let g:pad_dir = '~/.dotfiles/vim/pad'
-let g:pad_custom_mappings = 1
-nmap <leader>PL :ListPads<CR>
-nmap <leader>PN :OpenPad<CR>
-
-" Vim Notes  {{{2
-" ---------
-let g:notes_directory = '~/.dotfiles/vim/notes'
-" NeoComplCache  {{{2
-" -------------
-let g:neocomplcache_enable_at_startup = 0
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-" let g:neocomplcache_enable_fuzzy_completion = 1
-
-"---------------------------------------------------------------------
-" Spielplatz                                                      {{{1
-"---------------------------------------------------------------------
-

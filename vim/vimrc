@@ -197,9 +197,8 @@ Bundle 'gmarik/vundle'
 Bundle 'L9'
 " Asynchronous execution of shell commands. Required by easytags.vim
 Bundle 'shell.vim--Odding'
-
-" Not sure what that is for.
-" Bundle 'MarcWeber/vim-addon-mw-utils'
+" Required by snipmate.
+Bundle 'MarcWeber/vim-addon-mw-utils'
 " Not sure what that is for.
 " Bundle 'tomtom/tlib_vim'
 

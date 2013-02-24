@@ -187,6 +187,8 @@ set softtabstop=4
 " Tabulator am Zeilenanfang auf sw setzen.
 " Shiftwidth at beginning of line, softtabstop within line.
 set smarttab
+" Shift to fixed steps of shiftwidth
+set shiftround
 " Expand tabs to white spaces.
 set expandtab
 " Always set autoindenting on.

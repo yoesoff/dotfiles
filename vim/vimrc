@@ -1030,7 +1030,7 @@ if has("autocmd")
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
   autocmd FileType vim setlocal foldmethod=marker
-  autocmd BufNewFile,BufRead [._]vimrc,vimrc
+  autocmd BufNewFile,BufRead [._]vimrc,vimrc,[._]gvimrc,gvimrc
         \ setlocal foldexpr=Foldexpr_vimrc(v:lnum)
         \ foldtext=Foldtext_vimrc()
         \ foldmethod=expr

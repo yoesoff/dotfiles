@@ -361,8 +361,8 @@ Bundle 'L9'
 " Asynchronous execution of shell commands. Required by easytags.vim
 " Required by snipmate.
 Bundle 'MarcWeber/vim-addon-mw-utils'
-" Not sure what that is for.
-" Bundle 'tomtom/tlib_vim'
+" Required by snipmate.
+Bundle 'tomtom/tlib_vim'
 " Allow `.` repeat for many operations.
 Bundle 'tpope/vim-repeat'
 

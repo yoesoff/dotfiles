@@ -777,6 +777,44 @@ map <F1> <ESC>:exec "help ".expand("<cWORD>")<CR>
 " toggle folds with space bar
 nnoremap <space> za
 
+" Vimrc folding
+" -------------
+" Motivated by [https://gist.github.com/sjl/1038710]
+func! Foldexpr_vimrc(lnum)
+  let l1 = getline(a:lnum)
+
+  if l1 =~ '^\s*$'
+    " ignore empty lines
+    return '='
+  endif
+
+  let l2 = getline(a:lnum+1)
+  let l3 = getline(a:lnum+2)
+
+  if l1 =~ '^" =\{70}$' && l3 =~ '^" =\{70}$' && l2 =~ '^"  \S.*$'
+    return '>1'
+  elseif l1 =~ '^" -\{70}$' && l3 =~ '^" -\{70}$' && l2 =~ '^"  \S.*$'
+    return '>2'
+  elseif l1 =~ '^" \S.*$' && l2 =~ '^" -\+$'
+    return '>3'
+  elseif l1 =~ '^" #\{70}$'
+    return '>0'
+  else
+    return '='
+  endif
+endfunc
+
+func! Foldtext_vimrc()
+  if v:foldlevel == 1 || v:foldlevel == 2
+    let titleline = getline(v:foldstart+1)
+  else
+    let titleline = getline(v:foldstart)
+  endif
+  let title = substitute(titleline, '^"\s*\(.*\S\)\s*$', '\1', '')
+  let num = v:foldend - v:foldstart + 1
+  return '+' . v:folddashes . ' ' . title . ' [' . num . '] '
+endfunc
+
 " DiffOrig
 " --------
 " Convenient command to see the difference between the current buffer and the
@@ -928,6 +966,10 @@ if has("autocmd")
   autocmd FileType html,css,scss,ruby,yaml,vim,sh,tex
 	\ setlocal sts=2 sw=2
   autocmd FileType vim setlocal foldmethod=marker
+  autocmd BufNewFile,BufRead [._]vimrc,vimrc
+        \ setlocal foldexpr=Foldexpr_vimrc(v:lnum)
+        \ foldtext=Foldtext_vimrc()
+        \ foldmethod=expr
   autocmd FileType c,cpp setlocal sw=4 noexpandtab
   autocmd FileType python setlocal sw=4 sts=4 expandtab
 	\ foldmethod=indent foldnestmax=2 foldcolumn=2

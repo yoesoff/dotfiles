@@ -180,12 +180,132 @@ call pathogen#helptags()
 " [https://github.com/gmarik/vundle]
 set rtp+=$HOME/.vim/vundles/vundle
 call vundle#rc($HOME . '/.vim/vundles')
+
+" Let Vundle manage itself. Required!
 Bundle 'gmarik/vundle'
+
+" Vim script libraries
+" --------------------
+Bundle 'L9'
+Bundle 'shell.vim--Odding'  " Asynchronous execution of shell commands.
+                            " Required by easytags.vim
+" Bundle 'MarcWeber/vim-addon-mw-utils'  " Not sure what that is for.
+" Bundle 'tomtom/tlib_vim'  " Not sure what that is for.
+
+" Vimball handling
+" ----------------
+" Bundle 'Vimball'
+
+" Local vim configuration
+" -----------------------
+Bundle 'MarcWeber/vim-addon-local-vimrc'
+
+" Language-specific syntax files
+" ------------------------------
+
+" Code completion
+" ---------------
+" Bundle 'Rip-Rip/clang_complete'
+" Bundle 'Shougo/neocomplcache'
+
+" Python plugins
+" --------------
+Bundle 'pep8'  " Check python for pep8 compatibility.
+Bundle 'python_match.vim'  " %-matching for if/then/else etc. in python.
+" Bundle 'ehamberg/vim-cute-python'  " displays cute unicode characters
+                                     " instead of lambda/sum/in/not/etc.
+Bundle 'fs111/pydoc.vim'  " Browse python documentation within vim.
+Bundle 'sontek/rope-vim'  " Refactoring plugin
+Bundle 'tpope/vim-repeat'  " Allow `.` repeat for many operations.
+
+" Comment plugin
+" --------------
+" Bundle 'tpope/vim-commentary'
+Bundle 'scrooloose/nerdcommenter'
+
+" Syntax check on buffer save
+" ---------------------------
+Bundle 'scrooloose/syntastic'
+
+" Git plugins
+" -----------
+" Bundle 'gregsexton/gitv'  " Gitk within vim.
+" Bundle 'mattn/gist-vim'  " Gist integration into vim.
+Bundle 'tpope/vim-fugitive'  " All-mighty git integration.
+
+" Hex-color editing
+" -----------------
+" Bundle 'yurifury/hexHighlight'  " Highlights hex-colors with their actual
+                                  " color
+
+" Various editing plugins
+" -----------------------
+" Bundle 'Indent-Guides'  " Visualize indentation level.
+" Bundle 'Justify'
+Bundle 'rainbow_parentheses.vim'  " Rainbow colors help count pairs of
+                                  " parenthesis.
+Bundle 'godlygeek/tabular'  " Arange text in tables.
+" Bundle 'tpope/vim-speeddating'  " <C-A>/<C-X> for dates.
+Bundle 'tpope/vim-surround'  " Quickly edit surroundings.
+
+" Various mappings
+" ----------------
+Bundle 'Lokaltog/vim-easymotion'  " Improved character motion t/f/T/F
+Bundle 'tpope/vim-unimpaired'  " Various mappings for switching buffers, etc.
+
+" Templates and snippets
+" ----------------------
+Bundle 'garbas/vim-snipmate'  " Text Mate like snippet manager
+Bundle 'snipmate-snippets'  " Snippet collection for snipmate.
+
+" Source code browsing
+" --------------------
+" TODO: Compare taglist and tagbar.
+" Bundle 'taglist.vim'  " Side pane display of code tags.
+" Bundle 'majutsushi/tagbar'  " Side pane display of code tags.
+" Bundle 'TaskList.vim'  " list FIXME/TODO/XXX comments.
+
+" Undo managers
+" -------------
+Bundle 'sjl/gundo.vim'
+
+" File managers/explorers
+" -----------------------
+" Bundle 'FuzzyFinder'
+
+" Buffer managers/explorers
+" -------------------------
+Bundle 'bufkill.vim'  " Delete buffer, without closing window.
+Bundle 'scrooloose/nerdtree'  " File browser
+
+" Vim as a sticky-note manager
+" ----------------------------
+Bundle 'xolox/vim-notes'
+
+" Project manager
+" ---------------
+" Bundle 'tmallen/proj-vim'
+
+" Shell inside vim
+" ----------------
+" Bundle 'Conque-Shell'
+
+" Documentation browser
+" ---------------------
+" Bundle 'info.vim'
+
+" Colorschemes
+" ------------
+" Bundle 'ScrollColors'  " Scroll through available color-schemes.
+" Bundle 'godlygeek/csapprox'  " Translate gui-colorschemes to 265-color
+                               " terminal colorschemes.
+Bundle 'altercation/vim-colors-solarized'
+
 
 " ----------------------------------------------------------------------
 "  System plugins setup
 " ----------------------------------------------------------------------
-set rtp+=/usr/share/vim/current/vimfiles
+" set rtp+=/usr/share/vim/current  " Not sure if necessary.
 
 
 " ======================================================================
@@ -331,54 +451,6 @@ set rtp+=/usr/share/vim/current/vimfiles
 " Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
 " "Appendix B".
 
-" -------------------------------------------------------------------
-" VUNDLES                                                        {{{1
-" -------------------------------------------------------------------
-Bundle 'bufkill.vim'
-Bundle 'MarcWeber/vim-addon-local-vimrc'
-Bundle 'Conque-Shell'
-" Bundle 'FuzzyFinder'
-Bundle 'Indent-Guides'
-Bundle 'info.vim'
-Bundle 'Justify'
-Bundle 'L9'
-Bundle 'pep8'
-Bundle 'python_match.vim'
-Bundle 'rainbow_parentheses.vim'
-Bundle 'ScrollColors'
-Bundle 'shell.vim--Odding'
-Bundle 'taglist.vim'
-Bundle 'TaskList.vim'
-Bundle 'Vimball'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'ehamberg/vim-cute-python'
-Bundle 'fs111/pydoc.vim'
-Bundle 'godlygeek/csapprox'
-Bundle 'godlygeek/tabular'
-Bundle 'gregsexton/gitv'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'majutsushi/tagbar'
-Bundle 'mattn/gist-vim'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'snipmate-snippets'
-Bundle 'garbas/vim-snipmate'
-Bundle 'Rip-Rip/clang_complete'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'sjl/gundo.vim'
-Bundle 'sontek/rope-vim'
-Bundle 'tmallen/proj-vim'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-speeddating'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'xolox/vim-notes'
-Bundle 'yurifury/hexHighlight'
-Bundle 'Shougo/neocomplcache'
-"---------------------------------------------------------------------
 
 "---------------------------------------------------------------------
 " Generelle Einstellungen                                         {{{1

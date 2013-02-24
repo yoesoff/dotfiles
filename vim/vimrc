@@ -235,6 +235,7 @@ set history=50
 set undofile
 " Tab-completion menu for ex-commands.
 set wildmenu
+set wildmode=list:longest,full
 
 " ----------------------------------------------------------------------
 "  executing external commands

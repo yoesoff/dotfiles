@@ -667,6 +667,7 @@ let g:notes_directory = '~/.dotfiles/vim/notes'
 " Translate gui-colorschemes to 265-color terminal colorschemes.
 " Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'jonathanfilip/vim-lucius'
 
 
 " ----------------------------------------------------------------------
@@ -703,7 +704,10 @@ Bundle 'altercation/vim-colors-solarized'
 " Set console color scheme.
 " TODO: Tango colorscheme or terminal solarized.
 if !has('gui_running')
-  if &t_Co >= 88
+  if &t_Co >= 256
+    colorscheme lucius
+    LuciusDark
+  elseif &t_Co >= 88
     colorscheme zenburn
   else
     colorscheme delek

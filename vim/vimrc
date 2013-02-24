@@ -428,7 +428,7 @@ let g:pymode_rope = 1
 
 " Documentation
 let g:pymode_doc = 1
-let g:pymode_doc_key = '<leader>K'
+let g:pymode_doc_key = 'K'
 
 "Linting
 let g:pymode_lint = 1

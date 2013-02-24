@@ -6,7 +6,7 @@
 "
 " Settings are organized in sections
 "   - initial setup
-"       Settings that need to be done before the plugins are loaded.
+"       Settings that can be done before the plugins are loaded.
 "       E.g. mapleader
 "   - plugins
 "       Loading and configuration of plugins. Configuration should be
@@ -14,6 +14,13 @@
 "   - setup
 "       Settings that are not confined to a single plugin.
 "       E.g. statusline
+"   - Other commands, functions, and mappings
+"       My own commands, functions, and mappings, that may depend on
+"       certain plugins to be loaded, but don't explicitely refer to
+"       a certain plugin.
+"   - Autocommands
+"       Various autocommands. Mainly, custom file-type detection and file-type
+"       settings.
 "
 " The setup sections should try to adhere to the order defined by the
 " `:options` command. I.e.:
@@ -48,7 +55,7 @@
 " ======================================================================
 "  initial setup
 " ======================================================================
-" Settings that need to be done before the plugins are loaded.
+" Settings that can be done before the plugins are loaded.
 " E.g. mapleader
 
 " ----------------------------------------------------------------------
@@ -747,6 +754,8 @@ set statusline=%<
 " ======================================================================
 "  Other commands, functions, and mappings
 " ======================================================================
+" My own commands, functions, and mappings, that may depend on certain plugins
+" to be loaded, but don't explicitely refer to a certain plugin.
 
 " Various mappings
 " ----------------
@@ -891,6 +900,9 @@ vmap <C-Down> ]egv
 " ======================================================================
 "  Auto commands
 " ======================================================================
+" Various autocommands. Mainly, custom file-type detection and file-type
+" settings.
+
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 

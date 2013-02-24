@@ -236,6 +236,9 @@ set undofile
 " Tab-completion menu for ex-commands.
 set wildmenu
 set wildmode=list:longest,full
+if exists('&wildignorecase')
+  set wildignorecase
+endif
 
 " ----------------------------------------------------------------------
 "  executing external commands

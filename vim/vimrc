@@ -91,13 +91,15 @@ set ignorecase smartcase
 " ----------------------------------------------------------------------
 "  displaying text
 " ----------------------------------------------------------------------
+set scrolloff=3
 if has("multi_byte")
   " Nice characters in listing mode
   "   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
   "                   ⍽ 9085(x237D), ␣ 9251(x2423), ↪ 8618(x21AA)
   set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
-  set showbreak=↪
+  set showbreak=↪\ \ 
 endif
+set linebreak
 command! -nargs=* Wrap set wrap linebreak nolist
 command! -nargs=* Nowrap set nowrap
 

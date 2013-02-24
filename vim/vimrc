@@ -67,6 +67,11 @@ set nocompatible
 " ----------------------------------------------------------------------
 "  moving around, searching and patterns
 " ----------------------------------------------------------------------
+" do incremental searching
+set incsearch
+" Searching test will find test, Test, tEst, etc.
+" while search Test will find Test.
+set ignorecase smartcase
 
 " ----------------------------------------------------------------------
 "  tags
@@ -75,14 +80,42 @@ set nocompatible
 " ----------------------------------------------------------------------
 "  displaying text
 " ----------------------------------------------------------------------
+if has("multi_byte")
+  " Nice characters in listing mode
+  "   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
+  "                   ⍽ 9085(x237D), ␣ 9251(x2423), ↪ 8618(x21AA)
+  set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
+  set showbreak=↪
+endif
+command! -nargs=* Wrap set wrap linebreak nolist
+command! -nargs=* Nowrap set nowrap
 
 " ----------------------------------------------------------------------
 "  syntax, highlighting and spelling
 " ----------------------------------------------------------------------
+if &t_Co > 2 || has("gui_running")
+  " Switch syntax highlighting on, when the terminal has colors
+  syntax on
+  " Also switch on highlighting the last used search pattern.
+  set hlsearch
+endif
+
+" Set default set of spell-checking languages. Spell-checking itself
+" should be activated by ftplugins or autocommands.
+set spelllang=de,en
+
+" color column - Highlight column to emphasize textwidth.
+set colorcolumn=+1
 
 " ----------------------------------------------------------------------
 "  multiple windows
 " ----------------------------------------------------------------------
+" Let's you hide unsaved buffers.
+set hidden
+
+" When jumping to another buffer, jump to the first open window, that contains
+" that buffer. If there is none, open the buffer in the current window.
+set switchbuf=useopen
 
 " ----------------------------------------------------------------------
 "  multiple tab pages
@@ -95,6 +128,8 @@ set nocompatible
 " ----------------------------------------------------------------------
 "  using the mouse
 " ----------------------------------------------------------------------
+" In many terminal emulators the mouse works just fine, thus enable it.
+set mouse=a
 
 " ----------------------------------------------------------------------
 "  GUI
@@ -108,6 +143,10 @@ set nocompatible
 " ----------------------------------------------------------------------
 "  messages and info
 " ----------------------------------------------------------------------
+" show the cursor position all the time
+set ruler
+" display incomplete commands
+set showcmd
 
 " ----------------------------------------------------------------------
 "  selecting text
@@ -116,10 +155,27 @@ set nocompatible
 " ----------------------------------------------------------------------
 "  editing text
 " ----------------------------------------------------------------------
+" Allow backspacing over everything in insert mode.
+set backspace=indent,eol,start
+" Max linewidth.
+set textwidth=79
+" Default format options  [refer to fo-table]
+"   autowrap text+comments, auto comment, allow `gq', numbered lists
+set formatoptions=tcroqn
 
 " ----------------------------------------------------------------------
 "  tabs and indenting
 " ----------------------------------------------------------------------
+set shiftwidth=4
+" Effective tabstop in insert mode. Doesn't touch tabstop, though.
+set softtabstop=4
+" Tabulator am Zeilenanfang auf sw setzen.
+" Shiftwidth at beginning of line, softtabstop within line.
+set smarttab
+" Expand tabs to white spaces.
+set expandtab
+" Always set autoindenting on.
+set autoindent
 
 " ----------------------------------------------------------------------
 "  folding
@@ -137,6 +193,13 @@ let mapleader = ','
 " ----------------------------------------------------------------------
 "  reading and writing files
 " ----------------------------------------------------------------------
+if has("vms")
+  " do not keep a backup file, use versions instead
+  set nobackup
+else
+  " keep a backup file
+  set backup
+endif
 
 " ----------------------------------------------------------------------
 "  the swap file
@@ -145,6 +208,12 @@ let mapleader = ','
 " ----------------------------------------------------------------------
 "  command line editing
 " ----------------------------------------------------------------------
+" keep 50 lines of command line history
+set history=50
+" Store undo history [refer to http://amix.dk/blog/post/19548]
+set undofile
+" Tab-completion menu for ex-commands.
+set wildmenu
 
 " ----------------------------------------------------------------------
 "  executing external commands
@@ -165,6 +234,59 @@ let mapleader = ','
 " ----------------------------------------------------------------------
 "  various
 " ----------------------------------------------------------------------
+" Allow moving after the end of line in visual block mode.
+" ctrl+v $ still selects to individual line ends.
+set virtualedit+=block
+
+" Python virtualenv 
+" ------------------
+" Be aware of a python virtualenv.
+"   [http://sontek.net/turning-vim-into-a-modern-python-ide#virtualenv]
+if !empty($VIRTUAL_ENV)
+python << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+  project_base_dir = os.environ['VIRTUAL_ENV']
+  sys.path.insert(0, project_base_dir)
+  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+  execfile(activate_this, dict(__file__=activate_this))
+EOF
+endif
+
+" cscope setup
+" ------------
+" TODO: Compare to [http://cscope.sourceforge.net/cscope_vim_tutorial.html]
+" [refer to http://vim.wikia.com/wiki/Cscope]
+if has('cscope')
+  set cscopetag cscopeverbose
+
+  if has('quickfix')
+    set cscopequickfix=s-,c-,d-,i-,t-,e-
+  endif
+
+  " TODO: default to `cscope.out'
+  cnoreabbrev csa cs add
+  cnoreabbrev csf cs find
+  cnoreabbrev csk cs kill
+  cnoreabbrev csr cs reset
+  cnoreabbrev css cs show
+  cnoreabbrev csh cs help
+  cnoreabbrev cmk make cscope
+
+  " Add the following to your Makefile:
+  "     # Build the cscope database.
+  "     # This may search more files than necessary.
+  "     .PHONY: cscope csclean
+  "     csclean:
+  "             -rm -vf cscope.out
+  "     cscope.out:
+  "             cscope -bv ./*.[ch] ./*.cpp ./*.cc
+  "     cscope: csclean cscope.out  ;
+
+  command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
+endif
 
 
 " ======================================================================
@@ -365,10 +487,33 @@ Bundle 'altercation/vim-colors-solarized'
 " ----------------------------------------------------------------------
 "  syntax, highlighting and spelling
 " ----------------------------------------------------------------------
+" Set console color scheme.
+" TODO: Tango colorscheme or terminal solarized.
+if !has('gui_running')
+  if &t_Co >= 88
+    colorscheme zenburn
+  else
+    colorscheme delek
+  endif
+endif
 
 " ----------------------------------------------------------------------
 "  multiple windows
 " ----------------------------------------------------------------------
+" Always show status line.
+set laststatus=2
+" Status line
+" Include encoding and byte order mark (bomb)
+" [http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line]
+" TODO: Separate into several statusline+= lines. Extract conditions.
+set statusline=%<
+      \%{(exists('*SyntasticStatuslineFlag')?SyntasticStatuslineFlag():\"\")}
+      \%f%h%m%r
+      \%{(exists('*fugitive#statusline')?fugitive#statusline():\"\")}
+      \\ [%{&ff}]%{\"
+      \[\".(&fenc==\"\"?&enc:&fenc).
+      \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
+      \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
 
 " ----------------------------------------------------------------------
 "  multiple tab pages
@@ -452,129 +597,155 @@ Bundle 'altercation/vim-colors-solarized'
 " ----------------------------------------------------------------------
 
 
+" ======================================================================
+"  Other commands, functions, and mappings
+" ======================================================================
 
-" ######################################################################
-"  OLD VIM Settings
-" ######################################################################
+" Various mappings
+" ----------------
+" Don't use Ex mode, use Q for formatting
+map Q gq
 
-"--------------------------------------------------------------------
-" Vim Einstellungsdatei                                          {{{1
-"--------------------------------------------------------------------
-" Diese Datei sollte alle Einstellungen enthalten, die Vim im
-" Allgemeinen und im Speziellen betreffen. Einstellungen, die GVim
-" im Speziellen betreffen gehören in $HOME/.gvimrc .
-"
-" Alle Einstellungen sind grob in vier Bereiche eingeteilt:
-" - Generelle Einstellungen
-" - Key mappings für eigene Makros
-" - Skript-spezifische Einstellungen
-" - Spielplatz (Testweise eingebaute Einstellungen, Makros und
-"   Snippets. Einstellungen, die wirklich nur kurz ausprobiert
-"   werden sollen, sollten zunächst in einer seperaten Datei stehen
-"   und per source eingebunden werden.)
-"
-" Sollten einige dieser Einstellungsbereiche zu groß werden, oder zu
-" einem bestimmten Skript zu viele Einstellungen nötig sein, lohnt es
-" sich diese in eine eigene Datei zu exportieren und in dieser Datei
-" per source einzubinden.
-" Alle Einstellungen sollte sorgfältig und am besten mit Zweck,
-" Quelle, Autor kommentiert werden!
-"
-" Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
-" "Appendix B".
+" Visually select the text that was last edited/pasted
+nmap gV `[v`]
+
+" Schneller Zugang zur Hilfe automatisch zum Wort unter dem Cursor
+map <F1> <ESC>:exec "help ".expand("<cWORD>")<CR>
+
+" toggle folds with space bar
+nnoremap <space> za
+
+" DiffOrig
+" --------
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+	 	\ | wincmd p | diffthis
+
+" Edit and source vim configuration.
+" ----------------------------------
+com! Evimrc tabedit $MYVIMRC
+com! Egvimrs tabedit $MYGVIMRC
+com! Sorc source $MYVIMRC |
+      \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
+
+" cd into the directory the current buffer is in.
+com! CD cd %:p:h
+com! LCD lcd %:p:h
+
+" Preserve cursor position.
+" -------------------------
+" A function, that preserves the cursor position while executing a command.
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+
+" Act on whole file
+" -----------------
+
+" Strip trailing white spaces
+nmap <silent> _$ :call Preserve("%s/\\s\\+$//e")<CR>
+
+" Align whole file
+nmap <silent> _= :call Preserve("normal gg=G")<CR>
+
+" Underlining tool
+" ----------------
+" Underline the current line with '-', or given characters
+function! s:Underline(chars)
+  let chars = empty(a:chars) ? '-' : a:chars
+  let nb_chars = len(chars)
+  let nb_columns = virtcol('$') - 1
+  if has('float')
+    let nb_insertions = floor(nb_columns / str2float(nb_chars))
+    let remainder = nb_columns % nb_chars
+  else
+    let nb_insertions = nb_columns / nb_chars
+  endif
+  let saveFormatoptions = &formatoptions
+  set formatoptions-=o
+  execute "normal! o\<esc>"
+  let &formatoptions = saveFormatoptions
+  if has('float')
+    execute 'normal! ' . float2nr(nb_insertions) . 'i' . chars . "\<esc>"
+    if !empty(remainder)
+      execute 'normal! A' . strpart(chars, 0, remainder) . "\<esc>"
+    endif
+  else
+    execute 'normal! ' . nb_insertions . 'i' . chars . "\<esc>"
+  endif
+endfunction
+command! -nargs=? Underline call <sid>Underline(<q-args>)
+" Underline mappings
+nnoremap <silent> <leader>u :Underline -<CR>
+nnoremap <silent> <leader>U :Underline =<CR>
+nnoremap <silent> <leader>uu :Underline -<CR>
+nnoremap <silent> <leader>UU :Underline =<CR>
+" Requires NERDCommenter
+nnoremap <silent> <leader>uc :Underline -<CR>
+      \Vk:call NERDComment(1, 'alignBoth')<CR>
+nnoremap <silent> <leader>Uc :Underline =<CR>
+      \Vk:call NERDComment(1, 'alignBoth')<CR>
+
+" Change file permissions
+" -----------------------
+" chmod of current file
+command! -nargs=? Chmod :!chmod <q-args> "%"
+nnoremap <silent> <leader>X :Chmod +x<CR>
+
+" Quickfix window and location list mappings.
+" -------------------------------------------
+" Show quickfix window for current search with <leader>q/
+nnoremap <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
+" Further quickfix mappings
+nnoremap <leader>qo :copen<CR>
+nnoremap <leader>qc :cclose<CR>
+nnoremap ]q :cnext<CR>
+nnoremap [q :cprevios<CR>
+" Some locationlist mappings
+nnoremap <leader>lo :lopen<CR>
+nnoremap <leader>lc :lclose<CR>
+nnoremap ]l :lnext<CR>
+nnoremap [l :cprevious<CR>
+
+" Toggle automatic formatting
+" ---------------------------
+map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
+      \ set formatoptions-=a <Bar>
+      \ else <Bar>
+      \ set formatoptions+=a <Bar>
+      \ endif<CR>
+
+" Single line scrolling
+" ---------------------
+nmap <C-PageUP> <C-Y>
+nmap <C-PageDown> <C-E>
+imap <C-PageUP> <C-o><C-Y>
+imap <C-PageDown> <C-o><C-E>
+
+" Text bubbling
+" -------------
+" [http://vimcasts.org/episodes/bubbling-text/]
+" Requires the unimpared.vim package.
+nmap <C-Up> [e
+nmap <C-Down> ]e
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
 
 
-"---------------------------------------------------------------------
-" Generelle Einstellungen                                         {{{1
-"---------------------------------------------------------------------
-
-" Aus vimrc_example von Bram Moolenar
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file
-endif
-set history=50		" keep 50 lines of command line history
-set ruler		" show the cursor position all the time
-set showcmd		" display incomplete commands
-set incsearch		" do incremental searching
-
-" Use undofile
-" [refer to http://amix.dk/blog/post/19548]
-set undofile
-
-" allow backspacing over everything in insert mode
-" Aus vimrc_example von Bram Moolenar
-set backspace=indent,eol,start
-
-" In many terminal emulators the mouse works just fine, thus enable it.
-" Aus vimrc_example von Bram Moolenar
-set mouse=a
-
-" Allow moving after the end of line in visual block mode.
-" ctrl+v $ still selects to individual line ends.
-set virtualedit+=block
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-" Aus vimrc_example von Bram Moolenar
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
-endif
-
-" Nice characters in listing mode
-"   unicode values: ▸ 9656(x25B8), ╴ 9588(x2574), ¬ 172(xAC),
-"                   ⍽ 9085(x237D), ␣ 9251(x2423)
-if has("multi_byte")
-  set listchars=tab:▸\ ,eol:¬,nbsp:⍽,trail:␣
-endif
-
-" Sprachen für die Rechtschreibprüfung. Die Rechtschreibprüfung selbst
-" sollte in ftplugins gesetzt werden.
-set spelllang=de,en
-
-" Ermöglicht es nichtgespeicherte Puffer zu verstecken, wenn ein Kommando wie
-" :edit {file} den aktuellen Puffer braucht.
-set hidden
-
-" When jumping to another buffer, jump to the first open window, that contains
-" that buffer. If there is none, open the buffer in the current window.
-set switchbuf=useopen
-
-" Cooleres Tab-Menü
-set wildmenu
-
-" Searching test will find test, Test, tEst, etc.
-" while search Test will find Test.
-set ignorecase smartcase
-
-" Tab settings  {{{
-" Shiftwidth auf 4 stellen. Tabstop sollte unberührt bleiben!
-" Shiftwidth nur für den aktuellen Puffer setzen, in anderen könnte es
-" durch ftplugins beeinflusst sein.
-set sw=2
-" softtabstop bewirkt 4-Zeichen tab im insert-mode ohne tabstop zu ändern.
-set softtabstop=4
-" Tabulator am Zeilenanfang auf sw setzen.
-set smarttab
-" tab in Leerzeichen umwandeln
-set expandtab
-" always set autoindenting on
-set autoindent
-" }}}
-
-" Formatting options  {{{
-" Default textwidth
-set textwidth=78
-" Default format options  [refer to fo-table]
-"   autowrap text+comments, auto comment, allow `gq', numbered lists
-set formatoptions=tcroqn
-" }}}
-
+" ======================================================================
+"  Auto commands
+" ======================================================================
 " Only do this part when compiled with support for autocommands.
-" Aus vimrc_example von Bram Moolenar
-if has("autocmd")  " {{{
+if has("autocmd")
 
   " Enable file type detection.
   " Use the default filetype settings, so that mail gets 'tw' set to 72,
@@ -631,55 +802,8 @@ if has("autocmd")  " {{{
 
   augroup END
 
-endif " has("autocmd") }}}
-
-" Eigene allgemeine Abkürzungen einbinden
-" Aus "Hacking Vim" von Kim Schulz
-source $HOME/.vim/abbreviations.vim
-
-" Status line  {{{
-" Informative Statuszeile, die immer sichtbar ist
-" Aus "Hacking Vim" von Kim Schulz
-" Der komplizierte, lange Befehl erfragt das encoding und Byte Order Mark
-" geklaut aus der VIM-Wiki:
-" http://vim.wikia.com/wiki/Show_fileencoding_and_bomb_in_the_status_line
-set statusline=%<
-      \%{(exists('*SyntasticStatuslineFlag')?SyntasticStatuslineFlag():\"\")}
-      \%f%h%m%r
-      \%{(exists('*fugitive#statusline')?fugitive#statusline():\"\")}
-      \\ [%{&ff}]%{\"
-      \[\".(&fenc==\"\"?&enc:&fenc).
-      \((exists(\"+bomb\")\ &&\ &bomb)?\",B\":\"\").
-      \\"]\"}%=\ [\%03b,x\%02B]\ [%v,%l][%p%%][%L]
-set laststatus=2
-" }}}
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Aus vimrc_example von Bram Moolenar
-command! DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-	 	\ | wincmd p | diffthis
-
-" color scheme  {{{
-" Farbschema für Vim auf der Konsole setzen.
-if !has('gui_running')
-  if &t_Co >= 88
-    colorscheme zenburn
-  else
-    " Don't load CSApprox. No point in using it...
-    let g:CSApprox_loaded = 1
-    colorscheme delek
-  endif
-endif
-" }}}
-
-" color column
-" Highlight column to emphasize textwidth
-set colorcolumn=+1
-
-" Quick editing and automatic sourcing of vimrc file.  {{{
-if has("autocmd")
-  " :autocmd! config to disable automatic sourcing
+  " Automatically source vimrc file after editing it.
+  " TODO: Sure that this is a good idea?
   augroup config
     au!
     autocmd bufwritepost .vimrc source $MYVIMRC |
@@ -687,237 +811,56 @@ if has("autocmd")
     autocmd bufwritepost .gvimrc if has('gui_running') |
 	  \source $MYGVIMRC | let &ft=&ft | endif
   augroup END
-endif
-com! Evimrc tabedit $MYVIMRC
-com! Egvimrs tabedit $MYGVIMRC
-com! Sorc source $MYVIMRC |
-      \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
-" }}}
 
-" cd into the directory the current buffer is in.
-com! CD cd %:p:h
-com! LCD lcd %:p:h
+endif " has("autocmd")
 
-" Preserve cursor position  {{{
-" A function, that preserves the cursor position while executing a command.
-function! Preserve(command)
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Do the business:
-  execute a:command
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
-endfunction
-" }}}
 
-" Underlining tool  {{{
-function! s:Underline(chars)
-  let chars = empty(a:chars) ? '-' : a:chars
-  let nb_chars = len(chars)
-  let nb_columns = virtcol('$') - 1
-  if has('float')
-    let nb_insertions = floor(nb_columns / str2float(nb_chars))
-    let remainder = nb_columns % nb_chars
-  else
-    let nb_insertions = nb_columns / nb_chars
-  endif
-  let saveFormatoptions = &formatoptions
-  set formatoptions-=o
-  execute "normal! o\<esc>"
-  let &formatoptions = saveFormatoptions
-  if has('float')
-    execute 'normal! ' . float2nr(nb_insertions) . 'i' . chars . "\<esc>"
-    if !empty(remainder)
-      execute 'normal! A' . strpart(chars, 0, remainder) . "\<esc>"
-    endif
-  else
-    execute 'normal! ' . nb_insertions . 'i' . chars . "\<esc>"
-  endif
-endfunction
-command! -nargs=? Underline call <sid>Underline(<q-args>)
-" }}}
+" ######################################################################
+"  OLD VIM Settings
+" ######################################################################
 
-" Strip trailing white spaces
-nmap <silent> _$ :call Preserve("%s/\\s\\+$//e")<CR>
+"--------------------------------------------------------------------
+" Vim Einstellungsdatei                                          {{{1
+"--------------------------------------------------------------------
+" Diese Datei sollte alle Einstellungen enthalten, die Vim im
+" Allgemeinen und im Speziellen betreffen. Einstellungen, die GVim
+" im Speziellen betreffen gehören in $HOME/.gvimrc .
+"
+" Alle Einstellungen sind grob in vier Bereiche eingeteilt:
+" - Generelle Einstellungen
+" - Key mappings für eigene Makros
+" - Skript-spezifische Einstellungen
+" - Spielplatz (Testweise eingebaute Einstellungen, Makros und
+"   Snippets. Einstellungen, die wirklich nur kurz ausprobiert
+"   werden sollen, sollten zunächst in einer seperaten Datei stehen
+"   und per source eingebunden werden.)
+"
+" Sollten einige dieser Einstellungsbereiche zu groß werden, oder zu
+" einem bestimmten Skript zu viele Einstellungen nötig sein, lohnt es
+" sich diese in eine eigene Datei zu exportieren und in dieser Datei
+" per source einzubinden.
+" Alle Einstellungen sollte sorgfältig und am besten mit Zweck,
+" Quelle, Autor kommentiert werden!
+"
+" Diese Tipps stammen aus "Hacking Vim" von Kim Schulz aus dem
+" "Appendix B".
 
-" Align whole file
-nmap <silent> _= :call Preserve("normal gg=G")<CR>
 
-" chmod of current file
-command! -nargs=? Chmod :!chmod <q-args> "%"
-nnoremap <silent> <leader>X :Chmod +x<CR>
+"---------------------------------------------------------------------
+" Generelle Einstellungen                                         {{{1
+"---------------------------------------------------------------------
 
-" Soft linewrapping  {{{
-"   to insert unicode characters use ctrl-vu charcode
-if has("multi_byte")
-  command! -nargs=* Wrap set wrap linebreak nolist showbreak=…
-else
-  command! -nargs=* Wrap set wrap linebreak nolist showbreak=~
-endif
-command! -nargs=* Nowrap set nowrap
-map  <A-j> gj
-map  <A-k> gk
-map  <A-4> g$
-map  <A-6> g^
-map  <A-^> g^
-map  <A-0> g^
-imap <A-j> <C-o>gj
-imap <A-k> <C-o>gk
-imap <A-4> <C-o>g$
-imap <A-6> <C-o>g^
-imap <A-^> <C-o>g^
-imap <A-0> <C-o>g^
-" }}}
 
-" Python virtualenv  {{{
-"   [http://sontek.net/turning-vim-into-a-modern-python-ide#virtualenv]
-if !empty($VIRTUAL_ENV)
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  sys.path.insert(0, project_base_dir)
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-endif
-" }}}
+" Eigene allgemeine Abkürzungen einbinden
+" Aus "Hacking Vim" von Kim Schulz
+source $HOME/.vim/abbreviations.vim
 
-" cscope setup  {{{
-" [refer to http://vim.wikia.com/wiki/Cscope]
-if has('cscope')
-  set cscopetag cscopeverbose
-
-  if has('quickfix')
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-  endif
-
-  " TODO: default to `cscope.out'
-  cnoreabbrev csa cs add
-  cnoreabbrev csf cs find
-  cnoreabbrev csk cs kill
-  cnoreabbrev csr cs reset
-  cnoreabbrev css cs show
-  cnoreabbrev csh cs help
-  cnoreabbrev cmk make cscope
-
-  " Add the following to your Makefile:
-  "     # Build the cscope database.
-  "     # This may search more files than necessary.
-  "     .PHONY: cscope csclean
-  "     csclean:
-  "             -rm -vf cscope.out
-  "     cscope.out:
-  "             cscope -bv ./*.[ch] ./*.cpp ./*.cc
-  "     cscope: csclean cscope.out  ;
-
-  command! -nargs=0 Cscope cs add $VIMSRC/src/cscope.out $VIMSRC/src
-endif
-" }}}
 
 "---------------------------------------------------------------------
 " Key mappings für eigene Makros                                  {{{1
 "---------------------------------------------------------------------
 
-" Underline mappings  {{{
-nnoremap <silent> <leader>u :Underline -<CR>
-nnoremap <silent> <leader>U :Underline =<CR>
-nnoremap <silent> <leader>uu :Underline -<CR>
-nnoremap <silent> <leader>UU :Underline =<CR>
-nnoremap <silent> <leader>uc :Underline -<CR>
-      \Vk:call NERDComment(1, 'alignBoth')<CR>
-nnoremap <silent> <leader>Uc :Underline =<CR>
-      \Vk:call NERDComment(1, 'alignBoth')<CR>
-" }}}
 
-" Don't use Ex mode, use Q for formatting
-" Aus vimrc_example von Bram Moolenar
-map Q gq
-
-" Show quickfix window for current search with <leader>q/  {{{
-nnoremap <silent> <leader>q/ :execute 'vimgrep /'.@/.'/g %'<CR>:copen<CR>
-" Further quickfix mappings
-nnoremap <leader>qo :copen<CR>
-nnoremap <leader>qc :cclose<CR>
-nnoremap ]q :cnext<CR>
-nnoremap [q :cprevios<CR>
-" Some locationlist mappings
-nnoremap <leader>lo :lopen<CR>
-nnoremap <leader>lc :lclose<CR>
-nnoremap ]l :lnext<CR>
-nnoremap [l :cprevious<CR>
-" }}}
-
-" Toggle automatic formatting  {{{
-map <silent> <Leader>f :if &formatoptions =~# 'a' <Bar>
-      \ set formatoptions-=a <Bar>
-      \ else <Bar>
-      \ set formatoptions+=a <Bar>
-      \ endif<CR>
-" }}}
-
-" mappings to easily edit files, that are within the same directory as the
-" current file.  {{{
-cnoremap %% <C-R>=expand('%:h').'/'<cr>
-map <leader>ew :e %%
-map <leader>es :sp %%
-map <leader>ev :vsp %%
-map <leader>et :tabe %%
-" }}}
-
-" arrow key movement  {{{
-" Intuitives Springen durch Zeilen, die umgebrochen wurden.
-" Aus "Hacking Vim" von Kim Schulz
-map <DOWN> gj
-map <UP> gk
-imap <DOWN> <C-o>gj
-imap <UP> <C-o>gk
-" }}}
-
-" Single line scrolling  {{{
-nmap <C-PageUP> <C-Y>
-nmap <C-PageDown> <C-E>
-imap <C-PageUP> <C-o><C-Y>
-imap <C-PageDown> <C-o><C-E>
-" }}}
-
-" Text bubbling - http://vimcasts.org/episodes/bubbling-text/  {{{
-" using the unimpared.vim package
-nmap <C-Up> [e
-nmap <C-Down> ]e
-vmap <C-Up> [egv
-vmap <C-Down> ]egv
-" }}}
-
-" Visually select the text that way last edited/pasted
-nmap gV `[v`]
-
-" Einige aus den MS Visual Studios gewohnte Tastenkürzel
-imap <C-CR> <ESC>O
-imap <C-BS> <C-w>
-
-" Schneller Zugang zur Hilfe automatisch zum Wort unter dem Cursor
-" Aus "Hacking Vim" von Kim Schulz
-map <F1> <ESC>:exec "help ".expand("<cWORD>")<CR>
-
-" Go to next and previous file  {{{
-nnoremap <C-right> :next<CR>
-nnoremap <C-left> :prev<CR>
-nnoremap <C-home> :first<CR>
-nnoremap <C-end> :last<CR>
-nnoremap <C-S-right> :bnext<CR>
-nnoremap <C-S-left> :bprev<CR>
-nnoremap <C-S-home> :bfirst<CR>
-nnoremap <C-S-end> :blast<CR>
-" }}}
-
-" toggle folds with space bar
-nnoremap <space> za
 
 "---------------------------------------------------------------------
 " Skript-spezifische Einstellungen                                {{{1

@@ -219,6 +219,8 @@ else
   " keep a backup file
   set backup
 endif
+" Automatically re-read files that were changed outside of vim.
+set autoread
 
 " ----------------------------------------------------------------------
 "  the swap file

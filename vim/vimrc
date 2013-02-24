@@ -782,6 +782,15 @@ nnoremap <space> za
 " Vimrc folding
 " -------------
 " Motivated by [https://gist.github.com/sjl/1038710]
+" Custom fold expression with
+" level 1 headers:  " ======...===={70}
+"                   "  Title
+"                   " ======...===={70}
+" level 2 headers:  " ------...----{70}
+"                   "  Title
+"                   " ------...----{70}
+" level 3 headers:  " Title
+"                   " -----
 func! Foldexpr_vimrc(lnum)
   let l1 = getline(a:lnum)
 
@@ -806,6 +815,9 @@ func! Foldexpr_vimrc(lnum)
   endif
 endfunc
 
+" Custom fold text
+" FIXME: Flawed, if foldlevel jumps from 1 to 3. Vim introduces a level 2
+"        folding in between, and the title of this folding is non-sense.
 func! Foldtext_vimrc()
   if v:foldlevel == 1 || v:foldlevel == 2
     let titleline = getline(v:foldstart+1)

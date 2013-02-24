@@ -405,6 +405,7 @@ Bundle 'MarcWeber/vim-addon-local-vimrc'
 " Bundle 'python_match.vim'
 " displays cute unicode characters instead of lambda/sum/in/not/etc.
 " Bundle 'ehamberg/vim-cute-python'
+" TODO: Have a look at [https://github.com/davidhalter/jedi-vim]
 Bundle 'klen/python-mode'
 " Python-mode
 " refer to [http://unlogic.co.uk/posts/vim-python-ide.html]

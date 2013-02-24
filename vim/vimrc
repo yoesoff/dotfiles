@@ -52,110 +52,118 @@
 " E.g. mapleader
 
 " ----------------------------------------------------------------------
-"  important                             
+"  Easy-Vim mode
+" ----------------------------------------------------------------------
+" If run as evim (easy vim), don't perform any settings.
+if v:progname =~? "evim"
+  finish
+endif
+
+" ----------------------------------------------------------------------
+"  important
 " ----------------------------------------------------------------------
 set nocompatible
 
 " ----------------------------------------------------------------------
-"  moving around, searching and patterns 
+"  moving around, searching and patterns
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  tags                                  
+"  tags
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  displaying text                       
+"  displaying text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  syntax, highlighting and spelling     
+"  syntax, highlighting and spelling
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multiple windows                      
+"  multiple windows
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multiple tab pages                    
+"  multiple tab pages
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  terminal                              
+"  terminal
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  using the mouse                       
+"  using the mouse
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  GUI                                   
+"  GUI
 " ----------------------------------------------------------------------
 " These settings should be done in .gvimrc.
 
 " ----------------------------------------------------------------------
-"  printing                              
+"  printing
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  messages and info                     
+"  messages and info
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  selecting text                        
+"  selecting text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  editing text                          
+"  editing text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  tabs and indenting                    
+"  tabs and indenting
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  folding                               
+"  folding
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  diff mode                             
+"  diff mode
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  mapping                               
+"  mapping
 " ----------------------------------------------------------------------
 let mapleader = ','
 
 " ----------------------------------------------------------------------
-"  reading and writing files             
+"  reading and writing files
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  the swap file                         
+"  the swap file
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  command line editing                  
+"  command line editing
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  executing external commands           
+"  executing external commands
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  running make and jumping to errors    
+"  running make and jumping to errors
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  language specific                     
+"  language specific
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multi-byte characters                 
+"  multi-byte characters
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  various                               
+"  various
 " ----------------------------------------------------------------------
 
 
@@ -187,10 +195,13 @@ Bundle 'gmarik/vundle'
 " Vim script libraries
 " --------------------
 Bundle 'L9'
-Bundle 'shell.vim--Odding'  " Asynchronous execution of shell commands.
-                            " Required by easytags.vim
-" Bundle 'MarcWeber/vim-addon-mw-utils'  " Not sure what that is for.
-" Bundle 'tomtom/tlib_vim'  " Not sure what that is for.
+" Asynchronous execution of shell commands. Required by easytags.vim
+Bundle 'shell.vim--Odding'
+
+" Not sure what that is for.
+" Bundle 'MarcWeber/vim-addon-mw-utils'
+" Not sure what that is for.
+" Bundle 'tomtom/tlib_vim'
 
 " Vimball handling
 " ----------------
@@ -210,13 +221,18 @@ Bundle 'MarcWeber/vim-addon-local-vimrc'
 
 " Python plugins
 " --------------
-Bundle 'pep8'  " Check python for pep8 compatibility.
-Bundle 'python_match.vim'  " %-matching for if/then/else etc. in python.
-" Bundle 'ehamberg/vim-cute-python'  " displays cute unicode characters
-                                     " instead of lambda/sum/in/not/etc.
-Bundle 'fs111/pydoc.vim'  " Browse python documentation within vim.
-Bundle 'sontek/rope-vim'  " Refactoring plugin
-Bundle 'tpope/vim-repeat'  " Allow `.` repeat for many operations.
+" Check python for pep8 compatibility.
+Bundle 'pep8'
+" %-matching for if/then/else etc. in python.
+Bundle 'python_match.vim'
+" displays cute unicode characters instead of lambda/sum/in/not/etc.
+" Bundle 'ehamberg/vim-cute-python'
+" Browse python documentation within vim.
+Bundle 'fs111/pydoc.vim'
+" Refactoring plugin
+Bundle 'sontek/rope-vim'
+" Allow `.` repeat for many operations.
+Bundle 'tpope/vim-repeat'
 
 " Comment plugin
 " --------------
@@ -229,41 +245,55 @@ Bundle 'scrooloose/syntastic'
 
 " Git plugins
 " -----------
-" Bundle 'gregsexton/gitv'  " Gitk within vim.
-" Bundle 'mattn/gist-vim'  " Gist integration into vim.
-Bundle 'tpope/vim-fugitive'  " All-mighty git integration.
+" Gitk within vim.
+" Bundle 'gregsexton/gitv'
+" Gist integration into vim.
+" Bundle 'mattn/gist-vim'
+" All-mighty git integration.
+Bundle 'tpope/vim-fugitive'
 
 " Hex-color editing
 " -----------------
-" Bundle 'yurifury/hexHighlight'  " Highlights hex-colors with their actual
-                                  " color
+" Highlights hex-colors with their actual color.
+" Bundle 'yurifury/hexHighlight'
 
 " Various editing plugins
 " -----------------------
-" Bundle 'Indent-Guides'  " Visualize indentation level.
+" Visualize indentation level.
+" Bundle 'Indent-Guides'
 " Bundle 'Justify'
-Bundle 'rainbow_parentheses.vim'  " Rainbow colors help count pairs of
-                                  " parenthesis.
-Bundle 'godlygeek/tabular'  " Arange text in tables.
-" Bundle 'tpope/vim-speeddating'  " <C-A>/<C-X> for dates.
-Bundle 'tpope/vim-surround'  " Quickly edit surroundings.
+" Rainbow colors help count pairs of parenthesis.
+Bundle 'rainbow_parentheses.vim'
+" Arange text in tables.
+Bundle 'godlygeek/tabular'
+" " <C-A>/<C-X> for dates.
+" Bundle 'tpope/vim-speeddating'
+" Quickly edit surroundings.
+Bundle 'tpope/vim-surround'
 
 " Various mappings
 " ----------------
-Bundle 'Lokaltog/vim-easymotion'  " Improved character motion t/f/T/F
-Bundle 'tpope/vim-unimpaired'  " Various mappings for switching buffers, etc.
+" Improved character motion t/f/T/F
+Bundle 'Lokaltog/vim-easymotion'
+" Various mappings for switching buffers, etc.
+Bundle 'tpope/vim-unimpaired'
 
 " Templates and snippets
 " ----------------------
-Bundle 'garbas/vim-snipmate'  " Text Mate like snippet manager
-Bundle 'snipmate-snippets'  " Snippet collection for snipmate.
+" Text Mate like snippet manager
+Bundle 'garbas/vim-snipmate'
+" Snippet collection for snipmate.
+Bundle 'snipmate-snippets'
 
 " Source code browsing
 " --------------------
 " TODO: Compare taglist and tagbar.
-" Bundle 'taglist.vim'  " Side pane display of code tags.
-" Bundle 'majutsushi/tagbar'  " Side pane display of code tags.
-" Bundle 'TaskList.vim'  " list FIXME/TODO/XXX comments.
+" Side pane display of code tags.
+" Bundle 'taglist.vim'
+" Side pane display of code tags.
+" Bundle 'majutsushi/tagbar'
+" list FIXME/TODO/XXX comments.
+" Bundle 'TaskList.vim'
 
 " Undo managers
 " -------------
@@ -275,8 +305,10 @@ Bundle 'sjl/gundo.vim'
 
 " Buffer managers/explorers
 " -------------------------
-Bundle 'bufkill.vim'  " Delete buffer, without closing window.
-Bundle 'scrooloose/nerdtree'  " File browser
+" Delete buffer, without closing window.
+Bundle 'bufkill.vim'
+" File browser
+Bundle 'scrooloose/nerdtree'
 
 " Vim as a sticky-note manager
 " ----------------------------
@@ -296,9 +328,10 @@ Bundle 'xolox/vim-notes'
 
 " Colorschemes
 " ------------
-" Bundle 'ScrollColors'  " Scroll through available color-schemes.
-" Bundle 'godlygeek/csapprox'  " Translate gui-colorschemes to 265-color
-                               " terminal colorschemes.
+" Scroll through available color-schemes.
+" Bundle 'ScrollColors'
+" Translate gui-colorschemes to 265-color terminal colorschemes.
+" Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
 
 
@@ -315,108 +348,108 @@ Bundle 'altercation/vim-colors-solarized'
 " E.g. statusline
 
 " ----------------------------------------------------------------------
-"  important                             
+"  important
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  moving around, searching and patterns 
+"  moving around, searching and patterns
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  tags                                  
+"  tags
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  displaying text                       
+"  displaying text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  syntax, highlighting and spelling     
+"  syntax, highlighting and spelling
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multiple windows                      
+"  multiple windows
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multiple tab pages                    
+"  multiple tab pages
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  terminal                              
+"  terminal
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  using the mouse                       
+"  using the mouse
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  GUI                                   
+"  GUI
 " ----------------------------------------------------------------------
 " These settings should be done in .gvimrc.
 
 " ----------------------------------------------------------------------
-"  printing                              
+"  printing
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  messages and info                     
+"  messages and info
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  selecting text                        
+"  selecting text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  editing text                          
+"  editing text
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  tabs and indenting                    
+"  tabs and indenting
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  folding                               
+"  folding
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  diff mode                             
+"  diff mode
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  mapping                               
+"  mapping
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  reading and writing files             
+"  reading and writing files
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  the swap file                         
+"  the swap file
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  command line editing                  
+"  command line editing
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  executing external commands           
+"  executing external commands
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  running make and jumping to errors    
+"  running make and jumping to errors
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  language specific                     
+"  language specific
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  multi-byte characters                 
+"  multi-byte characters
 " ----------------------------------------------------------------------
 
 " ----------------------------------------------------------------------
-"  various                               
+"  various
 " ----------------------------------------------------------------------
 
 
@@ -455,18 +488,6 @@ Bundle 'altercation/vim-colors-solarized'
 "---------------------------------------------------------------------
 " Generelle Einstellungen                                         {{{1
 "---------------------------------------------------------------------
-
-" When started as "evim", evim.vim will already have done these settings.
-" Aus vimrc_example von Bram Moolenar
-if v:progname =~? "evim"
-  finish
-endif
-
-" Keine Kompatibilität mit Vi! Viele Scripts setzen das voraus.
-set nocompatible
-
-" Lilypond config file
-set runtimepath+=/usr/share/lilypond/2.10.33/vim/
 
 " Aus vimrc_example von Bram Moolenar
 if has("vms")
@@ -664,13 +685,13 @@ if has("autocmd")
     au!
     autocmd bufwritepost .vimrc source $MYVIMRC |
 	  \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
-    autocmd bufwritepost .gvimrc if has('gui_running') | 
+    autocmd bufwritepost .gvimrc if has('gui_running') |
 	  \source $MYGVIMRC | let &ft=&ft | endif
   augroup END
 endif
 com! Evimrc tabedit $MYVIMRC
 com! Egvimrs tabedit $MYGVIMRC
-com! Sorc source $MYVIMRC | 
+com! Sorc source $MYVIMRC |
       \if has('gui_running') | source $MYGVIMRC | endif | let &ft=&ft
 " }}}
 
@@ -785,7 +806,7 @@ if has('cscope')
   cnoreabbrev css cs show
   cnoreabbrev csh cs help
   cnoreabbrev cmk make cscope
-  
+
   " Add the following to your Makefile:
   "     # Build the cscope database.
   "     # This may search more files than necessary.
@@ -956,7 +977,7 @@ vmap <Leader>t: :Tabularize /:\zs<CR>
 "   requires that the first line of the table is already aligned.
 "   I.e. | 1 | 2 | 3 | rather than |1|2|3|.
 inoremap <silent> <Bar>   <Bar><Esc>:call <SID>align()<CR>a
- 
+
 function! s:align()
   let p = '^\s*|\s.*\s|\s*$'
   if exists(':Tabularize') && getline('.') =~# '^\s*|' && (getline(line('.')-1) =~# p || getline(line('.')+1) =~# p)

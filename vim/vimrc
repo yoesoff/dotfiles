@@ -995,7 +995,7 @@ if has("autocmd")
         \ foldtext=Foldtext_vimrc()
         \ foldmethod=expr
   autocmd FileType c,cpp setlocal sw=4 noexpandtab
-  autocmd FileType python setlocal sw=4 sts=4 expandtab
+  autocmd FileType python setlocal sw=4 sts=4 nowrap expandtab
 	\ foldmethod=indent foldnestmax=2 foldcolumn=2
   autocmd FileType javascript setlocal sts=4 sw=4 noexpandtab
   autocmd BufNewFile,BufRead *.rss setfiletype xml

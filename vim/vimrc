@@ -457,6 +457,10 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 " Don't autofold code
 " let g:pymode_folding = 0
 
+" Ipython bindings
+" ----------------
+Bundle 'ivanov/vim-ipython'
+
 " Comment plugin
 " --------------
 " Bundle 'tpope/vim-commentary'

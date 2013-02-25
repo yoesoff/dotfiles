@@ -671,7 +671,8 @@ let g:notes_directory = '~/.dotfiles/vim/notes'
 " Translate gui-colorschemes to 265-color terminal colorschemes.
 " Bundle 'godlygeek/csapprox'
 Bundle 'altercation/vim-colors-solarized'
-Bundle 'jonathanfilip/vim-lucius'
+" Bundle 'jonathanfilip/vim-lucius'  " Doesn't seem to work through ssh.
+Bundle 'nanotech/jellybeans.vim'
 
 
 " ----------------------------------------------------------------------
@@ -709,7 +710,7 @@ Bundle 'jonathanfilip/vim-lucius'
 " TODO: Tango colorscheme or terminal solarized.
 if !has('gui_running')
   if &t_Co >= 256
-    colorscheme lucius
+    colorscheme jellybeans
     LuciusDark
   elseif &t_Co >= 88
     colorscheme zenburn

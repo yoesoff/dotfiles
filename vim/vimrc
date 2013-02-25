@@ -711,7 +711,6 @@ Bundle 'nanotech/jellybeans.vim'
 if !has('gui_running')
   if &t_Co >= 256
     colorscheme jellybeans
-    LuciusDark
   elseif &t_Co >= 88
     colorscheme zenburn
   else

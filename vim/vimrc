@@ -474,7 +474,7 @@ let g:syntastic_auto_loc_list = 2
 let g:syntastic_stl_format = '%E{%eE}%W{%wW}!'
 let g:syntastic_mode_map = { 'mode': 'active',
       \ 'active_filetypes': [],
-      \ 'passive_filetypes': ['c', 'cpp', 'tex'] }
+      \ 'passive_filetypes': ['c', 'cpp', 'tex', 'python'] }
 
 " Git plugins
 " -----------

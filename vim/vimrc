@@ -431,12 +431,18 @@ Bundle 'klen/python-mode'
 "               (normal, visual, operator modes)
 let g:pymode_rope = 1
 
+" No rope completion - too slow!
+let g:pymode_rope_vim_completion = 0
+let g:pymode_rope_extended_completion = 0
+let g:pymode_rope_map_space = 0
+
 " Documentation
 let g:pymode_doc = 1
 let g:pymode_doc_key = 'K'
 
-"Linting
-let g:pymode_lint = 1
+" Linting
+" switched off by default - too slow!
+let g:pymode_lint = 0
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 let g:pymode_lint_write = 1
@@ -456,6 +462,46 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 
 " Don't autofold code
 " let g:pymode_folding = 0
+
+" IPython bindings
+" ----------------
+Bundle 'ivanov/vim-ipython'
+" Run IPython as `ipython console` (ipython console --pylab works too).
+" Then run `:IPython` in vim-session.
+" No default mappings:
+let g:ipy_perform_mappings = 0
+map <silent> <C-F9> :python run_this_file()<CR>
+map <silent> <F9> :python run_this_line()<CR>
+vmap <silent> <F9> :python run_these_lines()<CR>
+map <silent> <M-F9> :python dedent_run_this_line()<CR>
+vmap <silent> <M-F9> :python dedent_run_these_lines()<CR>
+map <silent> <leader>d :py get_doc_buffer()<CR>
+" map <silent> <leader>s :py if update_subchannel_msgs(force=True): echo("vim-ipython shell updated",'Operator')<CR>
+" Reselect lines after sending. Default: Off.
+map <silent> <S-F9> :python toggle_reselect()<CR>
+" Breakpoints don't quite work yet.
+"map <silent> <C-F6> :python send('%pdb')<CR>
+"map <silent> <F6> :python set_breakpoint()<CR>
+"map <silent> <s-F6> :python clear_breakpoint()<CR>
+"map <silent> <F7> :python run_this_file_pdb()<CR>
+"map <silent> <s-F7> :python clear_all_breaks()<CR>
+" map <C-F5> :call <SID>toggle_send_on_save()<CR>
+"" Example of how to quickly clear the current plot with a keystroke
+"map <silent> <F12> :python run_command("plt.clf()")<cr>
+"" Example of how to quickly close all figures with a keystroke
+"map <silent> <F11> :python run_command("plt.close('all')")<cr>
+
+"pi custom
+" map <silent> <C-Return> :python run_this_file()<CR>
+" map <silent> <C-s> :python run_this_line()<CR>
+" imap <silent> <C-s> <C-O>:python run_this_line()<CR>
+" map <silent> <M-s> :python dedent_run_this_line()<CR>
+" vmap <silent> <C-S> :python run_these_lines()<CR>
+" vmap <silent> <M-s> :python dedent_run_these_lines()<CR>
+" map <silent> <M-c> I#<ESC>
+" vmap <silent> <M-c> I#<ESC>
+" map <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
+" vmap <silent> <M-C> :s/^\([ \t]*\)#/\1/<CR>
 
 " Comment plugin
 " --------------

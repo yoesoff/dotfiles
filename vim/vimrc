@@ -468,6 +468,13 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 Bundle 'ivanov/vim-ipython'
 " Run IPython as `ipython console` (ipython console --pylab works too).
 " Then run `:IPython` in vim-session.
+" Mappings:
+" <leader>d : Show documentation of word under cursor (ipy object?).
+" <C-F9> : Run current file through %run magic.
+" <F9> : Run current line/visual selection.
+" <M-F9> : Run current line/visual selection, but dedent first.
+" <S-F9> : Toggle - Reselect after sending.
+" <C-X><C-U> : IPython completion function. (TODO: SuperTab?)
 " No default mappings:
 let g:ipy_perform_mappings = 0
 map <silent> <C-F9> :python run_this_file()<CR>

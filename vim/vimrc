@@ -444,10 +444,10 @@ let g:pymode_doc_key = 'K'
 " Linting
 " Run with :PyLint
 " Autocorrect pep8 using :PyLintAuto
-let g:pymode_lint = 0
+let g:pymode_lint = 1
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
-" switched off by default - too slow!
+" switched off by default - too annoying ;)
 " Change using :PyLintToggle
 let g:pymode_lint_write = 0
 

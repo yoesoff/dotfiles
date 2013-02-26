@@ -466,10 +466,6 @@ let g:pymode_syntax_space_errors = g:pymode_syntax_all
 " IPython bindings
 " ----------------
 Bundle 'ivanov/vim-ipython'
-=======
-" IPython bindings
-" ----------------
-Bundle 'ivanov/vim-ipython'
 " Run IPython as `ipython console` (ipython console --pylab works too).
 " Then run `:IPython` in vim-session.
 " Mappings:

@@ -429,7 +429,8 @@ Bundle 'klen/python-mode'
 "               (normal, visual, operator modes)
 " ]M            Jump on next class or method
 "               (normal, visual, operator modes)
-let g:pymode_rope = 1
+" Too slow!
+let g:pymode_rope = 0
 
 " No rope completion - too slow!
 let g:pymode_rope_vim_completion = 0
@@ -443,7 +444,7 @@ let g:pymode_doc_key = 'K'
 " Linting
 " Run with :PyLint
 " Autocorrect pep8 using :PyLintAuto
-let g:pymode_lint = 1
+let g:pymode_lint = 0
 let g:pymode_lint_checker = "pyflakes,pep8"
 " Auto check on save
 " switched off by default - too slow!

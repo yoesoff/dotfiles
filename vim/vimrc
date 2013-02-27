@@ -623,12 +623,14 @@ Bundle 'tpope/vim-unimpaired'
 " Templates and snippets
 " ----------------------
 " Text Mate like snippet manager
-Bundle 'garbas/vim-snipmate'
+" Bundle 'garbas/vim-snipmate'
 " Snippet collection for snipmate.
-Bundle 'snipmate-snippets'
+" Bundle 'snipmate-snippets'
 " To redifine the trigger key, refer tp :help snipMate-remap
 " Indentation is affected by softtabstop or expandtab
-let g:snips_author = 'Andreas Herrmann'
+" let g:snips_author = 'Andreas Herrmann'
+" Give UltiSnips a try [http://www.vim.org/scripts/script.php?script_id=2715]
+Bundle 'SirVer/ultisnips'
 
 " Source code browsing
 " --------------------

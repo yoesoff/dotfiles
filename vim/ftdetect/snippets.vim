@@ -1,0 +1,1 @@
+../vundles/ultisnips/ftdetect/snippets.vim

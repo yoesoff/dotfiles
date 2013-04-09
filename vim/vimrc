@@ -574,6 +574,8 @@ endif
 Bundle 'tpope/vim-surround'
 " Leave visual mode s mapping alone.
 xmap <leader>s <Plug>Vsurround
+" Column text-objects
+Bundle 'coderifous/textobj-word-column.vim'
 " Improved and automatic text-objects
 Bundle 'paradigm/TextObjectify'
 let g:textobjectify = {
